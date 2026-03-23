@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-
+import { Lato, Geist_Mono } from "next/font/google";
+import { Navbar } from "@/components/layout/navbar";
+import { Footer } from "@/components/layout/footer";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const lato = Lato({
+  variable: "--font-lato",
   subsets: ["latin"],
+  weight: ["300", "400", "700", "900"],
 });
 
 const geistMono = Geist_Mono({
@@ -29,11 +31,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased h-dvh overflow-hidden`}
+        className={`${lato.variable} ${geistMono.variable} font-sans antialiased`}
       >
         <TooltipProvider>
-          <div className="h-dvh overflow-hidden">
-            <main className="h-full">{children}</main>
+          <div className="flex min-h-dvh flex-col">
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
           </div>
           <Toaster />
         </TooltipProvider>

@@ -1,46 +1,109 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import { Suspense, useEffect, useState, useMemo, useRef, useCallback } from "react";
 import Link from "next/link";
+import { useSearchParams, useRouter } from "next/navigation";
 import { PageHeader } from "@/components/shared/page-header";
 import { SkillCard } from "@/components/skills/skill-card";
 import { type SkillProfile } from "@/lib/skills";
+import { CATEGORIES } from "@/lib/constants";
+import { type Collection } from "@/lib/collections";
+import { CollectionCard } from "@/components/skills/collection-card";
 import { Search, X } from "lucide-react";
+import { fuzzyScore, bestMatch } from "@/lib/search";
 
 export default function BrowsePage() {
+  return (
+    <Suspense>
+      <BrowseContent />
+    </Suspense>
+  );
+}
+
+function BrowseContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [profiles, setProfiles] = useState<SkillProfile[]>([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState("");
-  const [activeTag, setActiveTag] = useState<string | null>(null);
+  const [search, setSearch] = useState(searchParams.get("q") || "");
+  const [activeCategory, setActiveCategory] = useState(searchParams.get("category") || "All");
+  const [activeTag, setActiveTag] = useState<string | null>(searchParams.get("tag") || null);
+  const [showAllTags, setShowAllTags] = useState(false);
+  const [collections, setCollections] = useState<Collection[]>([]);
+  const [activeCollection, setActiveCollection] = useState<string[]>([]);
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  const updateURL = useCallback((q: string, category: string, tag: string | null) => {
+    const params = new URLSearchParams();
+    if (q) params.set("q", q);
+    if (category !== "All") params.set("category", category);
+    if (tag) params.set("tag", tag);
+    const qs = params.toString();
+    router.replace(qs ? `/browse?${qs}` : "/browse", { scroll: false });
+  }, [router]);
+
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === "/" && document.activeElement?.tagName !== "INPUT") {
+        e.preventDefault();
+        searchRef.current?.focus();
+      }
+    }
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
 
   useEffect(() => {
     fetch("/api/skills")
       .then((r) => r.json())
       .then(setProfiles)
       .finally(() => setLoading(false));
+    fetch("/api/collections")
+      .then((r) => r.json())
+      .then(setCollections)
+      .catch(() => {});
   }, []);
 
+  // Tags scoped to active category
   const allTags = useMemo(() => {
+    const categoryProfiles = activeCategory === "All"
+      ? profiles
+      : profiles.filter((p) => p.meta.category === activeCategory);
     const s = new Set<string>();
-    profiles.forEach((p) => p.meta.skills.forEach((t) => s.add(t)));
+    categoryProfiles.forEach((p) => p.meta.skills.forEach((t) => s.add(t)));
     return Array.from(s).sort();
-  }, [profiles]);
+  }, [profiles, activeCategory]);
+
+  const visibleTags = showAllTags ? allTags : allTags.slice(0, 6);
+  const hiddenCount = allTags.length - 6;
 
   const filtered = useMemo(() => {
     return profiles.filter((p) => {
+      if (activeCollection.length > 0) {
+        return activeCollection.includes(p.slug);
+      }
+      const matchCategory = activeCategory === "All" || p.meta.category === activeCategory;
       const q = search.toLowerCase();
       const matchSearch =
         !q ||
-        p.meta.name.toLowerCase().includes(q) ||
-        p.meta.description.toLowerCase().includes(q) ||
-        p.meta.skills.some((s) => s.toLowerCase().includes(q));
+        fuzzyScore(q, p.meta.name) > 0 ||
+        fuzzyScore(q, p.meta.description) > 0 ||
+        p.meta.skills.some((s) => fuzzyScore(q, s) > 0) ||
+        fuzzyScore(q, p.meta.category) > 0;
       const matchTag = !activeTag || p.meta.skills.includes(activeTag);
-      return matchSearch && matchTag;
+      return matchCategory && matchSearch && matchTag;
     });
-  }, [profiles, search, activeTag]);
+  }, [profiles, search, activeCategory, activeTag, activeCollection]);
+
+  function handleCategoryChange(cat: string) {
+    setActiveCategory(cat);
+    setActiveTag(null);
+    setShowAllTags(false);
+    updateURL(search, cat, null);
+  }
 
   return (
-    <div className="relative h-full overflow-auto bg-white">
+    <div className="relative bg-white">
       {/* Animated grid */}
       <div className="pointer-events-none fixed inset-0">
         <div className="bg-grid bg-grid-fade absolute inset-0" />
@@ -53,7 +116,7 @@ export default function BrowsePage() {
           description="Download a skill folder, drop it in your project, and start building."
         />
 
-        <p className="mt-4 text-xs text-gray-400 sm:text-sm">
+        <p className="mt-2 text-xs text-gray-400 sm:text-sm">
           New here?{" "}
           <Link
             href="/tutorial"
@@ -63,15 +126,15 @@ export default function BrowsePage() {
           </Link>
         </p>
 
-        {/* Toolbar */}
-        <div className="mt-8 flex flex-col gap-4 sm:mt-10 sm:flex-row sm:items-center sm:justify-between">
+        {/* Toolbar: count + search */}
+        <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center sm:justify-between">
           {!loading && (
             <p className="text-xs text-gray-500 sm:text-sm">
               {filtered.length}{" "}
               {filtered.length === 1 ? "template" : "templates"}
-              {activeTag && (
+              {activeCategory !== "All" && (
                 <span>
-                  {" "}in <span className="font-medium text-purple-600">{activeTag}</span>
+                  {" "}in <span className="font-medium text-purple-600">{activeCategory}</span>
                 </span>
               )}
             </p>
@@ -80,15 +143,21 @@ export default function BrowsePage() {
           <div className="relative w-full sm:max-w-[240px]">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-gray-300" />
             <input
+              ref={searchRef}
               type="text"
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) => { setSearch(e.target.value); updateURL(e.target.value, activeCategory, activeTag); }}
               placeholder="Search..."
-              className="h-9 w-full rounded-lg border border-gray-200 bg-white pl-9 pr-8 text-sm text-gray-800 placeholder:text-gray-300 outline-none transition-all focus:border-purple-300 focus:ring-2 focus:ring-purple-100"
+              className="h-9 w-full rounded-lg border border-gray-200 bg-white pl-9 pr-14 text-sm text-gray-800 placeholder:text-gray-300 outline-none transition-all focus:border-purple-300 focus:ring-2 focus:ring-purple-100"
             />
+            {!search && (
+              <kbd className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 rounded border border-gray-200 bg-gray-50 px-1.5 py-0.5 text-[10px] font-medium text-gray-400">
+                /
+              </kbd>
+            )}
             {search && (
               <button
-                onClick={() => setSearch("")}
+                onClick={() => { setSearch(""); updateURL("", activeCategory, activeTag); }}
                 className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-300 transition-colors hover:text-gray-500"
               >
                 <X className="h-3.5 w-3.5" />
@@ -97,24 +166,31 @@ export default function BrowsePage() {
           </div>
         </div>
 
-        {/* Tags */}
-        {allTags.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-1.5 sm:mt-5">
+        {/* Category tabs */}
+        <div className="mt-4 flex gap-1 max-sm:overflow-x-auto max-sm:pb-2 max-sm:-mx-5 max-sm:px-5 sm:mt-5 sm:flex-wrap">
+          {CATEGORIES.map((cat) => (
             <button
-              onClick={() => setActiveTag(null)}
-              className={`rounded-full px-3 py-1 text-[11px] font-semibold transition-all sm:text-xs ${
-                !activeTag
-                  ? "bg-purple-100 text-purple-700"
-                  : "text-gray-400 hover:bg-purple-50 hover:text-purple-600"
+              key={cat}
+              onClick={() => handleCategoryChange(cat)}
+              className={`shrink-0 rounded-full px-3 py-1.5 text-[11px] font-semibold transition-all sm:text-xs ${
+                activeCategory === cat
+                  ? "bg-purple-600 text-white"
+                  : "bg-gray-100 text-gray-500 hover:bg-purple-50 hover:text-purple-600"
               }`}
             >
-              All
+              {cat}
             </button>
-            {allTags.map((tag) => (
+          ))}
+        </div>
+
+        {/* Tag sub-filters */}
+        {allTags.length > 0 && (
+          <div className="mt-3 flex gap-1.5 max-sm:overflow-x-auto max-sm:pb-2 max-sm:-mx-5 max-sm:px-5 sm:flex-wrap">
+            {visibleTags.map((tag) => (
               <button
                 key={tag}
-                onClick={() => setActiveTag(activeTag === tag ? null : tag)}
-                className={`rounded-full px-3 py-1 text-[11px] font-semibold transition-all sm:text-xs ${
+                onClick={() => { const next = activeTag === tag ? null : tag; setActiveTag(next); updateURL(search, activeCategory, next); }}
+                className={`shrink-0 rounded-full px-2.5 py-1 text-[10px] font-medium transition-all sm:text-[11px] ${
                   activeTag === tag
                     ? "bg-purple-100 text-purple-700"
                     : "text-gray-400 hover:bg-purple-50 hover:text-purple-600"
@@ -123,30 +199,79 @@ export default function BrowsePage() {
                 {tag}
               </button>
             ))}
+            {hiddenCount > 0 && (
+              <button
+                onClick={() => setShowAllTags(!showAllTags)}
+                className="hidden shrink-0 rounded-full border border-dashed border-gray-200 px-2.5 py-1 text-[10px] font-medium text-gray-400 transition-all hover:border-purple-300 hover:text-purple-500 sm:inline-flex sm:text-[11px]"
+              >
+                {showAllTags ? "Show less" : `+${hiddenCount} more`}
+              </button>
+            )}
           </div>
         )}
 
-        {/* Divider */}
-        <div className="mt-6 h-px bg-gray-100 sm:mt-8" />
+        {/* Collections */}
+        {collections.length > 0 && activeCollection.length === 0 && !search && activeCategory === "All" && !activeTag && (
+          <div className="mt-6 sm:mt-8">
+            <p className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-gray-400 sm:text-xs">
+              Curated Collections
+            </p>
+            <div className="flex gap-3 overflow-x-auto pb-2 -mx-5 px-5 sm:-mx-8 sm:px-8">
+              {collections.map((c) => (
+                <CollectionCard
+                  key={c.id}
+                  collection={c}
+                  onSelect={setActiveCollection}
+                  active={false}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Active collection banner */}
+        {activeCollection.length > 0 && (
+          <div className="mt-6 flex items-center justify-between rounded-lg bg-purple-50 px-4 py-3 sm:mt-8">
+            <p className="text-sm font-medium text-purple-700">
+              Showing {activeCollection.length} skills from collection
+            </p>
+            <button
+              onClick={() => setActiveCollection([])}
+              className="text-xs font-medium text-purple-500 transition-colors hover:text-purple-700"
+            >
+              Clear
+            </button>
+          </div>
+        )}
 
         {/* Grid */}
-        <div className="mt-6 grid gap-4 sm:mt-8 md:grid-cols-2">
+        <div className="mt-6 grid items-start gap-4 sm:mt-8 md:grid-cols-2">
           {loading
             ? Array.from({ length: 3 }).map((_, i) => (
                 <div
                   key={i}
-                  className="rounded-xl border border-gray-100 bg-white p-5 shadow-sm sm:p-6"
+                  className="flex flex-col rounded-xl border border-gray-200 bg-white shadow-sm"
                 >
-                  <div className="flex items-start gap-3.5">
-                    <div className="h-10 w-10 animate-pulse rounded-lg bg-gray-100" />
-                    <div className="flex-1 space-y-2.5 pt-0.5">
-                      <div className="h-4 w-28 animate-pulse rounded bg-gray-100" />
-                      <div className="h-3 w-16 animate-pulse rounded bg-gray-50" />
+                  <div className="p-4 sm:p-5">
+                    <div className="flex items-center gap-3">
+                      <div className="h-9 w-9 animate-pulse rounded-lg bg-purple-50" />
+                      <div className="flex-1 space-y-2">
+                        <div className="h-4 w-32 animate-pulse rounded bg-gray-100" />
+                        <div className="h-3 w-20 animate-pulse rounded bg-gray-50" />
+                      </div>
+                    </div>
+                    <div className="mt-3 space-y-1.5">
+                      <div className="h-3 w-full animate-pulse rounded bg-gray-50" />
+                      <div className="h-3 w-2/3 animate-pulse rounded bg-gray-50" />
+                    </div>
+                    <div className="mt-3 flex gap-1.5">
+                      <div className="h-5 w-12 animate-pulse rounded-md bg-purple-50" />
+                      <div className="h-5 w-14 animate-pulse rounded-md bg-purple-50" />
+                      <div className="h-5 w-10 animate-pulse rounded-md bg-purple-50" />
                     </div>
                   </div>
-                  <div className="mt-4 space-y-1.5">
-                    <div className="h-3 w-full animate-pulse rounded bg-gray-50" />
-                    <div className="h-3 w-2/3 animate-pulse rounded bg-gray-50" />
+                  <div className="border-t border-gray-200 px-4 py-2.5 sm:px-5">
+                    <div className="h-4 w-24 animate-pulse rounded bg-gray-50" />
                   </div>
                 </div>
               ))
@@ -155,19 +280,47 @@ export default function BrowsePage() {
 
         {/* Empty */}
         {!loading && filtered.length === 0 && (
-          <div className="mt-10 py-16 text-center">
-            <p className="text-sm text-gray-400">
-              {profiles.length === 0
-                ? "No skill templates available yet."
-                : "No templates match your search."}
+          <div className="mt-10 flex flex-col items-center py-16 text-center">
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-purple-50 text-purple-400">
+              <Search className="h-6 w-6" />
+            </div>
+            <p className="mt-4 text-sm font-medium text-gray-700">
+              {profiles.length === 0 ? "No templates yet" : "No results found"}
             </p>
-            {(search || activeTag) && (
+            <p className="mt-1 text-xs text-gray-400">
+              {profiles.length === 0
+                ? "Skill templates will appear here once they're added."
+                : "Try a different search term or clear the filters."}
+            </p>
+            {search && profiles.length > 0 && (() => {
+              const suggestion = bestMatch(search, profiles.map((p) => ({ name: p.meta.name, slug: p.slug })));
+              return suggestion ? (
+                <p className="mt-2 text-xs text-gray-400">
+                  Did you mean{" "}
+                  <button
+                    onClick={() => { setSearch(suggestion); updateURL(suggestion, activeCategory, activeTag); }}
+                    className="font-medium text-purple-500 hover:text-purple-600"
+                  >
+                    {suggestion}
+                  </button>
+                  ?
+                </p>
+              ) : null;
+            })()}
+            {(search || activeTag || activeCategory !== "All") ? (
               <button
-                onClick={() => { setSearch(""); setActiveTag(null); }}
-                className="mt-3 text-xs font-medium text-purple-500 transition-colors hover:text-purple-600"
+                onClick={() => { setSearch(""); setActiveTag(null); setActiveCategory("All"); updateURL("", "All", null); }}
+                className="mt-4 inline-flex h-8 items-center rounded-full bg-purple-100 px-4 text-xs font-semibold text-purple-700 transition-all hover:bg-purple-600 hover:text-white"
               >
                 Clear filters
               </button>
+            ) : (
+              <Link
+                href="/tutorial"
+                className="mt-4 inline-flex h-8 items-center rounded-full bg-purple-100 px-4 text-xs font-semibold text-purple-700 transition-all hover:bg-purple-600 hover:text-white"
+              >
+                Learn how to create one
+              </Link>
             )}
           </div>
         )}

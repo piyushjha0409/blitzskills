@@ -13,8 +13,10 @@ import {
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { href: "/browse", label: "Browse" },
-  { href: "/post", label: "Post Skills" },
+  { href: "/get-started", label: "Get Started" },
+  { href: "/browse", label: "Skills" },
+  { href: "/knowledge", label: "Knowledge" },
+  { href: "/tutorial", label: "Guide" },
 ];
 
 export function Navbar() {
@@ -22,13 +24,13 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/80 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-500">
-            <span className="text-sm font-bold text-white">B</span>
+    <header className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white/80 backdrop-blur-md">
+      <div className="mx-auto flex h-14 max-w-3xl items-center justify-between px-5 sm:px-8 lg:max-w-4xl">
+        <Link href="/" className="group flex items-center gap-2">
+          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-purple-600 transition-colors group-hover:bg-purple-500">
+            <span className="text-xs font-bold text-white">M</span>
           </div>
-          <span className="text-lg font-bold">Blitz Skills</span>
+          <span className="text-sm font-bold text-gray-900 transition-colors group-hover:text-purple-600">Monad Skills</span>
         </Link>
 
         {/* Desktop nav */}
@@ -40,7 +42,9 @@ export function Navbar() {
                 size="sm"
                 className={cn(
                   "text-sm",
-                  pathname === link.href && "font-semibold"
+                  pathname === link.href
+                    ? "bg-purple-50 text-purple-700 font-semibold"
+                    : "text-gray-500 hover:text-purple-600 hover:bg-purple-50/50"
                 )}
               >
                 {link.label}
@@ -52,7 +56,7 @@ export function Navbar() {
         {/* Mobile nav */}
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild className="sm:hidden">
-            <Button variant="ghost" size="icon">
+            <Button variant="ghost" size="icon" className="text-gray-500">
               <svg
                 className="h-5 w-5"
                 fill="none"
@@ -69,8 +73,8 @@ export function Navbar() {
             </Button>
           </SheetTrigger>
           <SheetContent side="right" className="w-64">
-            <SheetTitle className="text-lg font-bold">Menu</SheetTitle>
-            <nav className="mt-6 flex flex-col gap-2">
+            <SheetTitle className="text-base font-bold text-gray-900">Menu</SheetTitle>
+            <nav className="mt-6 flex flex-col gap-1">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
@@ -79,7 +83,12 @@ export function Navbar() {
                 >
                   <Button
                     variant={pathname === link.href ? "secondary" : "ghost"}
-                    className="w-full justify-start"
+                    className={cn(
+                      "w-full justify-start",
+                      pathname === link.href
+                        ? "bg-purple-50 text-purple-700"
+                        : "text-gray-500"
+                    )}
                   >
                     {link.label}
                   </Button>

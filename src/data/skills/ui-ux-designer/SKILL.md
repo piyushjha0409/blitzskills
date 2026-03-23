@@ -1,6 +1,10 @@
 ---
 name: UI/UX Designer
 description: Skill for design-focused agents creating polished interfaces and design systems — from Figma prototypes to production-ready React + Tailwind implementations.
+category: Frontend
+difficulty: beginner
+author: Piyush Jha
+version: "1.0.0"
 skills:
   - Figma
   - UI/UX Design

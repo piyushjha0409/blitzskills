@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { parseFrontmatter } from "./parse-frontmatter";
 
 export interface SkillProfile {
   slug: string;
@@ -9,56 +10,34 @@ export interface SkillProfile {
     name: string;
     description: string;
     skills: string[];
+    category: string;
+    difficulty: string;
+    author: string;
+    version: string;
+    allowedTools: string[];
   };
   body: string;
 }
 
 const SKILLS_DIR = path.join(process.cwd(), "src/data/skills");
 
-function parseFrontmatter(content: string): {
-  meta: Record<string, unknown>;
-  body: string;
-} {
-  const match = content.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
-  if (!match) return { meta: {}, body: content };
-
-  const rawMeta = match[1];
-  const body = match[2].trim();
-  const meta: Record<string, unknown> = {};
-
-  let currentKey = "";
-  let inArray = false;
-  const arrayValues: string[] = [];
-
-  for (const line of rawMeta.split("\n")) {
-    if (inArray) {
-      if (line.startsWith("  - ")) {
-        arrayValues.push(line.replace("  - ", "").trim());
-        continue;
-      } else {
-        meta[currentKey] = [...arrayValues];
-        arrayValues.length = 0;
-        inArray = false;
-      }
-    }
-
-    const kvMatch = line.match(/^(\w+):\s*(.*)$/);
-    if (kvMatch) {
-      const [, key, value] = kvMatch;
-      if (value === "") {
-        currentKey = key;
-        inArray = true;
-      } else {
-        meta[key] = value.replace(/^["']|["']$/g, "");
-      }
-    }
-  }
-
-  if (inArray) {
-    meta[currentKey] = [...arrayValues];
-  }
-
-  return { meta, body };
+function buildProfile(slug: string, skillMd: string, readmeMd: string, meta: Record<string, unknown>, body: string): SkillProfile {
+  return {
+    slug,
+    skillMd,
+    readmeMd,
+    meta: {
+      name: (meta.name as string) || slug,
+      description: (meta.description as string) || "",
+      skills: (meta.skills as string[]) || [],
+      category: (meta.category as string) || "Uncategorized",
+      difficulty: (meta.difficulty as string) || "intermediate",
+      author: (meta.author as string) || "",
+      version: (meta.version as string) || "1.0.0",
+      allowedTools: (meta["allowed-tools"] as string[]) || [],
+    },
+    body,
+  };
 }
 
 export function getSkillProfiles(): SkillProfile[] {
@@ -80,17 +59,7 @@ export function getSkillProfiles(): SkillProfile[] {
         : "";
       const { meta, body } = parseFrontmatter(skillMd);
 
-      return {
-        slug: folder.name,
-        skillMd,
-        readmeMd,
-        meta: {
-          name: (meta.name as string) || folder.name,
-          description: (meta.description as string) || "",
-          skills: (meta.skills as string[]) || [],
-        },
-        body,
-      };
+      return buildProfile(folder.name, skillMd, readmeMd, meta, body);
     })
     .filter(Boolean) as SkillProfile[];
 }
@@ -106,15 +75,5 @@ export function getSkillProfile(slug: string): SkillProfile | null {
     : "";
   const { meta, body } = parseFrontmatter(skillMd);
 
-  return {
-    slug,
-    skillMd,
-    readmeMd,
-    meta: {
-      name: (meta.name as string) || slug,
-      description: (meta.description as string) || "",
-      skills: (meta.skills as string[]) || [],
-    },
-    body,
-  };
+  return buildProfile(slug, skillMd, readmeMd, meta, body);
 }

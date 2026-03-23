@@ -1,6 +1,10 @@
 ---
 name: Solidity Developer
 description: Skill for agents building smart contracts and DeFi protocols on Monad and EVM-compatible chains using Solidity, Foundry, and Hardhat.
+category: Smart Contracts
+difficulty: intermediate
+author: Piyush Jha
+version: "1.0.0"
 skills:
   - Solidity
   - Smart Contracts

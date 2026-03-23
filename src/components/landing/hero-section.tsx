@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 const STEPS = [
   { label: "Browse", desc: "Find a skill template" },
@@ -16,14 +17,14 @@ const SOCIALS = [
 
 export function HeroSection() {
   return (
-    <section className="relative flex h-full items-center justify-center overflow-y-auto bg-white">
+    <section className="relative flex min-h-[calc(100dvh-7.5rem)] items-center justify-center overflow-hidden bg-white">
       {/* Animated grid — two layers: lines + dots at intersections */}
       <div className="pointer-events-none absolute inset-0">
         <div className="bg-grid bg-grid-fade absolute inset-0" />
         <div className="bg-grid-dots bg-grid-fade absolute inset-0" />
       </div>
 
-      <div className="relative mx-auto flex w-full max-w-2xl flex-col items-center px-5 py-16 text-center sm:px-8 sm:py-0 lg:max-w-3xl">
+      <div className="relative mx-auto flex w-full max-w-2xl flex-col items-center px-5 py-12 text-center sm:px-8 sm:py-16 lg:max-w-3xl">
         {/* Badge */}
         <span className="mb-8 rounded-full border border-purple-200 bg-purple-50 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.15em] text-purple-600 sm:mb-10 sm:text-xs">
           Blitz Hackathon 2026
@@ -45,39 +46,46 @@ export function HeroSection() {
 
         {/* CTA */}
         <div className="mt-8 flex items-center gap-6 sm:mt-10">
+          <Button
+            asChild
+            className="h-11 rounded-full bg-purple-600 px-8 text-sm font-semibold text-white shadow-none transition-all hover:bg-purple-500 hover:shadow-lg hover:shadow-purple-200 sm:h-12 sm:px-10 sm:text-[0.9rem]"
+          >
+            <Link href="/get-started">Get Started</Link>
+          </Button>
           <Link
             href="/browse"
-            className="inline-flex h-11 items-center rounded-full bg-purple-100 px-8 text-sm font-semibold text-purple-700 transition-all hover:bg-purple-600 hover:text-white hover:shadow-lg hover:shadow-purple-200 sm:h-12 sm:px-10 sm:text-[0.9rem]"
+            className="text-[0.85rem] font-medium text-gray-400 transition-colors hover:text-purple-600"
           >
             Browse Skills
           </Link>
-          <Link
-            href="/tutorial"
-            className="text-[0.85rem] font-medium text-gray-400 transition-colors hover:text-purple-600"
-          >
-            How it works
-          </Link>
         </div>
 
-        {/* Steps */}
-        <div className="mt-16 flex w-full max-w-sm items-start justify-between sm:mt-20 sm:max-w-md">
+        {/* Steps with connectors */}
+        <div className="mt-16 flex w-full max-w-sm items-start justify-center sm:mt-20 sm:max-w-md">
           {STEPS.map((step, i) => (
-            <div key={step.label} className="flex flex-1 flex-col items-center text-center">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-50 text-xs font-bold text-purple-600 sm:h-9 sm:w-9">
-                {i + 1}
+            <div key={step.label} className="flex items-start">
+              <div className="flex w-20 flex-col items-center text-center sm:w-28">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-50 text-xs font-bold text-purple-600 sm:h-9 sm:w-9">
+                  {i + 1}
+                </div>
+                <p className="mt-2.5 text-[11px] font-semibold text-gray-800 sm:text-xs">
+                  {step.label}
+                </p>
+                <p className="mt-0.5 hidden text-[10px] leading-snug text-gray-400 sm:block sm:text-[11px]">
+                  {step.desc}
+                </p>
               </div>
-              <p className="mt-2.5 text-[11px] font-semibold text-gray-800 sm:text-xs">
-                {step.label}
-              </p>
-              <p className="mt-0.5 hidden text-[10px] leading-snug text-gray-400 sm:block sm:text-[11px]">
-                {step.desc}
-              </p>
+              {i < STEPS.length - 1 && (
+                <div className="mt-4 flex-shrink-0 w-8 border-t border-dashed border-purple-200 sm:w-12" />
+              )}
             </div>
           ))}
         </div>
 
         {/* Creator */}
-        <div className="mt-14 flex items-center gap-3 sm:mt-16">
+        <div className="mt-14 flex flex-col items-center gap-4 sm:mt-16">
+          <p className="text-[10px] uppercase tracking-widest text-gray-300">Built by</p>
+          <div className="flex items-center gap-3">
           <div className="relative h-10 w-10 overflow-hidden rounded-full ring-2 ring-purple-100">
             <Image
               src="/badge.jpg"
@@ -105,6 +113,7 @@ export function HeroSection() {
                 </svg>
               </a>
             ))}
+            </div>
           </div>
         </div>
       </div>

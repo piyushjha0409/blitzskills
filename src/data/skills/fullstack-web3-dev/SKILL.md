@@ -1,6 +1,10 @@
 ---
 name: Full Stack Web3 Developer
 description: Skill for full stack Web3 agents building production apps on Monad — from smart contracts to polished frontends with wallet integrations.
+category: Full Stack
+difficulty: intermediate
+author: Piyush Jha
+version: "1.0.0"
 skills:
   - React
   - Next.js
