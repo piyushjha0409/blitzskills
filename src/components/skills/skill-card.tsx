@@ -30,15 +30,15 @@ export function SkillCard({ profile }: { profile: SkillProfile }) {
   const diffConfig = DIFFICULTY_CONFIG[profile.meta.difficulty] || DIFFICULTY_CONFIG.intermediate;
 
   return (
-    <div className="group flex flex-col rounded-xl border border-gray-200 bg-white shadow-sm transition-all duration-200 hover:border-purple-200 hover:shadow-lg hover:shadow-purple-100/80 hover:-translate-y-0.5">
+    <div className="group flex flex-col rounded-xl border border-gray-200 bg-white shadow-sm transition-all duration-200 hover:border-amber-200 hover:shadow-lg hover:shadow-amber-100/80 hover:-translate-y-0.5">
       <div className="flex flex-1 flex-col p-4 sm:p-5">
         {/* Title — links to detail page */}
         <Link href={`/browse/${profile.slug}`} className="flex items-center gap-3 group/link">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-purple-50 text-purple-500">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-amber-50 text-amber-500">
             <FolderOpen className="h-4 w-4" />
           </div>
           <div className="min-w-0 flex-1">
-            <h3 className="text-sm font-semibold text-gray-900 transition-colors group-hover/link:text-purple-600 sm:text-[0.9rem]">
+            <h3 className="text-sm font-semibold text-gray-900 transition-colors group-hover/link:text-amber-600 sm:text-[0.9rem]">
               {profile.meta.name}
             </h3>
             <p className="text-[11px] text-gray-400">{profile.slug}/</p>
@@ -47,7 +47,7 @@ export function SkillCard({ profile }: { profile: SkillProfile }) {
 
         {/* Badges */}
         <div className="mt-2.5 flex flex-wrap gap-1.5">
-          <span className="rounded-md bg-purple-50 px-2 py-[2px] text-[10px] font-medium text-purple-600">
+          <span className="rounded-md bg-amber-50 px-2 py-[2px] text-[10px] font-medium text-amber-600">
             {profile.meta.category}
           </span>
           <span className={`rounded-md px-2 py-[2px] text-[10px] font-medium ${diffConfig.bg} ${diffConfig.text}`}>
@@ -95,7 +95,7 @@ export function SkillCard({ profile }: { profile: SkillProfile }) {
         <div className="flex flex-1 gap-1">
           <button
             onClick={handleCopy}
-            className="flex h-7 items-center gap-1.5 rounded-md px-2 text-[11px] font-medium text-gray-400 transition-all hover:bg-purple-50 hover:text-purple-600"
+            className="flex h-7 items-center gap-1.5 rounded-md px-2 text-[11px] font-medium text-gray-400 transition-all hover:bg-amber-50 hover:text-amber-600"
             title="Copy instructions to clipboard"
           >
             {copied ? (
@@ -112,7 +112,7 @@ export function SkillCard({ profile }: { profile: SkillProfile }) {
           </button>
           <button
             onClick={handleDownload}
-            className="flex h-7 items-center gap-1.5 rounded-md px-2 text-[11px] font-medium text-gray-400 transition-all hover:bg-purple-50 hover:text-purple-600"
+            className="flex h-7 items-center gap-1.5 rounded-md px-2 text-[11px] font-medium text-gray-400 transition-all hover:bg-amber-50 hover:text-amber-600"
             title="Download skill folder"
           >
             <Download className="h-3 w-3" />
@@ -121,7 +121,7 @@ export function SkillCard({ profile }: { profile: SkillProfile }) {
         </div>
         <button
           onClick={() => setExpanded(!expanded)}
-          className="flex h-7 items-center gap-1 rounded-md px-2 text-[11px] font-medium text-gray-400 transition-colors hover:text-purple-500"
+          className="flex h-7 items-center gap-1 rounded-md px-2 text-[11px] font-medium text-gray-400 transition-colors hover:text-amber-500"
         >
           {expanded ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
           <span>{expanded ? "Hide" : "Preview"}</span>
@@ -132,7 +132,7 @@ export function SkillCard({ profile }: { profile: SkillProfile }) {
       {expanded && (
         <div className="border-t border-gray-200 p-4 sm:p-5">
           <div className="max-h-80 overflow-auto rounded-lg bg-gray-50 p-4 sm:p-5">
-            <div className="prose prose-sm prose-gray max-w-none overflow-hidden prose-headings:text-gray-900 prose-p:text-gray-600 prose-li:text-gray-600 prose-strong:text-gray-700 prose-code:rounded prose-code:bg-white prose-code:px-1.5 prose-code:py-0.5 prose-code:text-purple-600 prose-code:font-semibold prose-code:before:content-none prose-code:after:content-none prose-pre:overflow-x-auto prose-pre:bg-white prose-pre:border prose-pre:border-gray-200">
+            <div className="prose prose-sm prose-gray max-w-none overflow-hidden prose-headings:text-gray-900 prose-p:text-gray-600 prose-li:text-gray-600 prose-strong:text-gray-700 prose-code:rounded prose-code:bg-white prose-code:px-1.5 prose-code:py-0.5 prose-code:text-amber-600 prose-code:font-semibold prose-code:before:content-none prose-code:after:content-none prose-pre:overflow-x-auto prose-pre:bg-white prose-pre:border prose-pre:border-gray-200">
               <Markdown remarkPlugins={[remarkGfm]}>{profile.body}</Markdown>
             </div>
           </div>

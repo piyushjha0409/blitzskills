@@ -1,6 +1,6 @@
 # NFT Collection Launcher
 
-Launch NFT collections on Monad with ERC-721/1155, generative art, IPFS metadata, and complete minting mechanics.
+Launch NFT collections on EVM chains with ERC-721/1155, generative art, IPFS metadata, and complete minting mechanics.
 
 ## What This Skill Does
 
@@ -17,7 +17,7 @@ Equips your agent with everything for NFT launches — from writing ERC-721/1155
 
 ## Ideal For
 
-Builders launching NFT collections, PFP projects, or any NFT-based application on Monad.
+Builders launching NFT collections, PFP projects, or any NFT-based application on EVM chains.
 
 ## Installation
 

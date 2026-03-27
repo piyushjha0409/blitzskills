@@ -1,6 +1,6 @@
 ---
 name: p2p-gaming
-description: "ACTIVATE when the user wants to build, deploy, or design a peer-to-peer on-chain game on Monad. Triggers on: P2P game, on-chain game, wager, bet, matchmaking, commit-reveal, game escrow, multiplayer blockchain game, turn-based game, rock paper scissors, coin flip, chess on-chain, WebSocket game, Monad gaming. Use this skill for ANY task involving peer-to-peer gaming contracts or gaming dApps on Monad Network."
+description: "ACTIVATE when the user wants to build, deploy, or design a peer-to-peer on-chain game on EVM chains. Triggers on: P2P game, on-chain game, wager, bet, matchmaking, commit-reveal, game escrow, multiplayer blockchain game, turn-based game, rock paper scissors, coin flip, chess on-chain, WebSocket game. Use this skill for ANY task involving peer-to-peer gaming contracts or gaming dApps on EVM-compatible chains."
 category: Gaming
 difficulty: intermediate
 author: Piyush Jha
@@ -11,24 +11,25 @@ skills:
   - WebSocket
   - Game Logic
   - P2P
-  - Monad
+  - EVM
 ---
 
 ## Instructions
 
-You are a **P2P On-Chain Gaming Architect** for Monad Network. Your job is to help users build provably fair peer-to-peer games with commit-reveal mechanics, wager escrow, matchmaking, and real-time WebSocket integration — all exploiting Monad's ~500ms block time for near-instant game settlement.
+You are a **P2P On-Chain Gaming Architect** for EVM-compatible chains. Your job is to help users build provably fair peer-to-peer games with commit-reveal mechanics, wager escrow, matchmaking, and real-time WebSocket integration.
 
 ---
 
-## Monad Network Reference
+## Network Reference (Example)
 
-| Field | Mainnet | Testnet |
+Configure for your target EVM chain. Example values:
+
+| Field | Mainnet (Ethereum) | Testnet (Sepolia) |
 |---|---|---|
-| **Chain ID** | 143 | 10143 |
-| **RPC URL** | `https://rpc.monad.xyz` | `https://testnet-rpc.monad.xyz` |
-| **Explorer** | `https://explorer.monad.xyz` | `https://testnet.monadexplorer.com` |
-| **Currency** | MON | MON |
-| **Block Time** | ~500ms | ~500ms |
+| **Chain ID** | 1 | 11155111 |
+| **RPC URL** | `https://eth.llamarpc.com` | `https://rpc.sepolia.org` |
+| **Explorer** | `https://etherscan.io` | `https://sepolia.etherscan.io` |
+| **Currency** | ETH | ETH |
 
 ---
 
@@ -269,7 +270,7 @@ contract RockPaperScissors is ReentrancyGuard {
 ```typescript
 import { WebSocketServer, WebSocket } from 'ws';
 import { createPublicClient, createWalletClient, http } from 'viem';
-import { monadTestnet } from './chains'; // custom chain config
+import { sepolia } from './chains'; // custom chain config
 
 const wss = new WebSocketServer({ port: 8080 });
 
@@ -369,11 +370,11 @@ const RPS_ADDRESS = '0xYourContract';
 // 1. Create game with wager
 function useCreateGame() {
   const { writeContract } = useWriteContract();
-  return (wagerInMON: string) => writeContract({
+  return (wagerInETH: string) => writeContract({
     address: RPS_ADDRESS,
     abi: RPS_ABI,
     functionName: 'createGame',
-    value: parseEther(wagerInMON),
+    value: parseEther(wagerInETH),
   });
 }
 
@@ -409,21 +410,21 @@ function useRevealMove() {
 
 ---
 
-## Step 4 — Deploy to Monad
+## Step 4 — Deploy to Your Target Chain
 
 ```bash
 # Install & init
-curl -L https://foundry.category.xyz | bash && foundryup --network monad
-forge init p2p-game --template monad && cd p2p-game
+curl -L https://foundry.category.xyz | bash && foundryup
+forge init p2p-game && cd p2p-game
 
-# Deploy to testnet
+# Deploy to testnet (example: Sepolia)
 forge script script/Deploy.s.sol:DeployGame \
-  --rpc-url https://testnet-rpc.monad.xyz \
+  --rpc-url https://rpc.sepolia.org \
   --broadcast --verify
 
-# Deploy to mainnet
+# Deploy to mainnet (example: Ethereum)
 forge script script/Deploy.s.sol:DeployGame \
-  --rpc-url https://rpc.monad.xyz \
+  --rpc-url https://eth.llamarpc.com \
   --broadcast --verify
 ```
 
@@ -432,7 +433,7 @@ forge script script/Deploy.s.sol:DeployGame \
 ## Game Lifecycle
 
 ```
-1. CREATE    →  Player 1 creates game with wager (MON escrowed)
+1. CREATE    →  Player 1 creates game with wager (ETH escrowed)
 2. JOIN      →  Player 2 joins with matching wager
 3. COMMIT    →  Both players submit hashed moves (commit phase)
 4. REVEAL    →  Both players reveal moves + salt (reveal phase)
@@ -449,7 +450,7 @@ forge script script/Deploy.s.sol:DeployGame \
 - User asks about **commit-reveal** patterns for fair play
 - User needs **matchmaking** or lobby mechanics
 - User wants **WebSocket** integration for real-time game state
-- User mentions **rock-paper-scissors**, **coin flip**, **chess**, or any game on Monad
+- User mentions **rock-paper-scissors**, **coin flip**, **chess**, or any on-chain game
 - User asks about **anti-cheat** or provably fair game mechanics
 - User needs **timeout** and dispute resolution for games
 

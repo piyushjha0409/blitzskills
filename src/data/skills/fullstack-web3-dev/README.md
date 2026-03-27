@@ -4,7 +4,7 @@ Skill template for building production apps in the Web3 space, covering the enti
 
 ## What This Skill Does
 
-Equips your agent with full stack Web3 capabilities — React/Next.js frontends, Node.js backends, Solidity smart contracts, and seamless wallet integrations. Optimized for the Monad ecosystem.
+Equips your agent with full stack Web3 capabilities — React/Next.js frontends, Node.js backends, Solidity smart contracts, and seamless wallet integrations. Works with any EVM-compatible chain.
 
 ## Skills Covered
 

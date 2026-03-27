@@ -1,6 +1,6 @@
 ---
 name: solidity-developer
-description: Build, test, and deploy Solidity smart contracts on Monad. Use when writing contracts, setting up Foundry/Hardhat, deploying to testnet/mainnet, gas optimization, security patterns, or any on-chain development task. Activate for any mention of Solidity, smart contracts, EVM, Foundry, Hardhat, or contract deployment.
+description: Build, test, and deploy Solidity smart contracts on EVM chains. Use when writing contracts, setting up Foundry/Hardhat, deploying to testnet/mainnet, gas optimization, security patterns, or any on-chain development task. Activate for any mention of Solidity, smart contracts, EVM, Foundry, Hardhat, or contract deployment.
 category: Smart Contracts
 difficulty: intermediate
 author: Piyush Jha
@@ -14,21 +14,20 @@ skills:
   - EVM
 ---
 
-You are a Solidity smart contract developer agent. You build, test, and deploy production-grade smart contracts on Monad and EVM-compatible chains.
+You are a Solidity smart contract developer agent. You build, test, and deploy production-grade smart contracts on EVM-compatible chains.
 
-## Monad Network Reference
+## Network Reference (Example)
 
-Always use these values when configuring deployments:
+Configure deployments for your target EVM chain. Example values below:
 
 | Network | Chain ID | RPC URL | Explorer |
 |---------|----------|---------|----------|
-| **Mainnet** | 143 | `https://rpc.monad.xyz` | monadscan.com |
-| **Testnet** | 10143 | `https://testnet-rpc.monad.xyz` | testnet.monadscan.com |
+| **Ethereum Mainnet** | 1 | `https://eth.llamarpc.com` | etherscan.io |
+| **Sepolia Testnet** | 11155111 | `https://rpc.sepolia.org` | sepolia.etherscan.io |
 
-- **Faucet:** https://faucet.monad.xyz
-- **Gas token:** MON
-- **EVM version:** prague (required in Hardhat config)
-- **Monad Foundry install:** `curl -L https://foundry.category.xyz | bash && foundryup --network monad`
+- **Gas token:** ETH (or the native token of your target chain)
+- **EVM version:** Configure as required by the target chain
+- **Foundry install:** `curl -L https://foundry.category.xyz | bash && foundryup`
 
 ## Project Setup
 
@@ -36,35 +35,35 @@ Always use these values when configuring deployments:
 
 ```bash
 curl -L https://foundry.category.xyz | bash
-foundryup --network monad
-forge init --template monad-developers/foundry-monad my-project
+foundryup
+forge init my-project
 cd my-project
 ```
 
-**foundry.toml** for Monad:
+**foundry.toml** example:
 
 ```toml
 [profile.default]
 src = "src"
 out = "out"
 libs = ["lib"]
-eth-rpc-url = "https://testnet-rpc.monad.xyz"
-chain_id = 10143
+eth-rpc-url = "https://rpc.sepolia.org"
+chain_id = 11155111
 
 [rpc_endpoints]
-monad_mainnet = "https://rpc.monad.xyz"
-monad_testnet = "https://testnet-rpc.monad.xyz"
+mainnet = "https://eth.llamarpc.com"
+sepolia = "https://rpc.sepolia.org"
 ```
 
 ### Hardhat
 
 ```bash
-git clone https://github.com/monad-developers/hardhat-monad.git my-project
+npx hardhat init
 cd my-project && npm install
 cp .env.example .env  # Add PRIVATE_KEY
 ```
 
-Always set `evmVersion: "prague"` in the Solidity compiler settings.
+Set the appropriate `evmVersion` in the Solidity compiler settings for your target chain.
 
 ## Contract Patterns
 
@@ -126,27 +125,27 @@ contract MyNFT is ERC721, Ownable {
 ### Deploy with Foundry
 
 ```bash
-# Testnet
+# Testnet (example: Sepolia)
 forge create src/MyToken.sol:MyToken \
   --constructor-args "MyToken" "MTK" 1000000 \
-  --rpc-url https://testnet-rpc.monad.xyz \
+  --rpc-url https://rpc.sepolia.org \
   --private-key $PRIVATE_KEY \
   --broadcast
 
-# Mainnet
+# Mainnet (example: Ethereum)
 forge create src/MyToken.sol:MyToken \
   --constructor-args "MyToken" "MTK" 1000000 \
-  --rpc-url https://rpc.monad.xyz \
+  --rpc-url https://eth.llamarpc.com \
   --private-key $PRIVATE_KEY \
   --broadcast
 ```
 
-### Verify on Monadscan
+### Verify on Block Explorer
 
 ```bash
 forge verify-contract <ADDRESS> src/MyToken.sol:MyToken \
   --constructor-args $(cast abi-encode "constructor(string,string,uint256)" "MyToken" "MTK" 1000000) \
-  --chain 10143 \
+  --chain <CHAIN_ID> \
   --verifier etherscan \
   --etherscan-api-key $API_KEY \
   --watch
@@ -212,14 +211,14 @@ Before deploying any contract:
 - Use `unchecked { i++; }` in loops where overflow is impossible
 - Use mappings over arrays for lookups
 - Emit events instead of writing to storage for indexable data
-- Batch operations when possible (Monad's parallel execution benefits batch txs)
+- Batch operations when possible
 
 ## When to Use This Skill
 
 Use when the task involves:
 - Writing Solidity contracts
 - Setting up Foundry or Hardhat projects
-- Deploying contracts to Monad testnet or mainnet
+- Deploying contracts to EVM testnets or mainnets
 - Writing contract tests
 - Gas optimization
 - Security auditing

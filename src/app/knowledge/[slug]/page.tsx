@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const kb = getKnowledgeBase(slug);
   if (!kb) return {};
   return {
-    title: `${kb.meta.name} | Monad Knowledge Base`,
+    title: `${kb.meta.name} | SkillForge Knowledge Base`,
     description: kb.meta.description,
   };
 }

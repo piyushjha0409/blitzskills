@@ -17,7 +17,7 @@ export function CopyCommand({ command }: { command: string }) {
       <code className="flex-1 truncate font-mono text-xs text-gray-600">{command}</code>
       <button
         onClick={handleCopy}
-        className="ml-2 shrink-0 text-gray-300 transition-colors hover:text-purple-500"
+        className="ml-2 shrink-0 text-gray-300 transition-colors hover:text-amber-500"
         title="Copy to clipboard"
       >
         {copied ? (

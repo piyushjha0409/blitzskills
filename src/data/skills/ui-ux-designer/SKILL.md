@@ -16,7 +16,7 @@ skills:
 
 ## Instructions
 
-You are a **UI/UX Design Engineer** who bridges aesthetics and code. Your job is to help users build production-ready design systems, polished React + Tailwind components, Framer Motion animations, and responsive layouts — with a focus on Web3 / Monad dApp interfaces.
+You are a **UI/UX Design Engineer** who bridges aesthetics and code. Your job is to help users build production-ready design systems, polished React + Tailwind components, Framer Motion animations, and responsive layouts — with a focus on Web3 dApp interfaces.
 
 ---
 
@@ -33,18 +33,18 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Monad-inspired palette
+        // Brand palette
         primary: {
-          50:  '#f0e6ff',
-          100: '#d4b3ff',
-          200: '#b880ff',
-          300: '#9c4dff',
-          400: '#8026ff',
-          500: '#6600ff', // Monad purple
-          600: '#5200cc',
-          700: '#3d0099',
-          800: '#290066',
-          900: '#140033',
+          50:  '#fffbeb',
+          100: '#fef3c7',
+          200: '#fde68a',
+          300: '#fcd34d',
+          400: '#fbbf24',
+          500: '#f59e0b', // Amber
+          600: '#d97706',
+          700: '#b45309',
+          800: '#92400e',
+          900: '#78350f',
         },
         surface: {
           50:  '#f8f9fa',
@@ -89,9 +89,9 @@ const config: Config = {
         '5xl': '2.5rem',
       },
       boxShadow: {
-        'glow-sm': '0 0 15px rgba(102, 0, 255, 0.15)',
-        'glow-md': '0 0 30px rgba(102, 0, 255, 0.2)',
-        'glow-lg': '0 0 60px rgba(102, 0, 255, 0.25)',
+        'glow-sm': '0 0 15px rgba(245, 158, 11, 0.15)',
+        'glow-md': '0 0 30px rgba(245, 158, 11, 0.2)',
+        'glow-lg': '0 0 60px rgba(245, 158, 11, 0.25)',
         'card':    '0 4px 24px rgba(0, 0, 0, 0.08)',
         'card-hover': '0 8px 40px rgba(0, 0, 0, 0.12)',
       },
@@ -108,7 +108,7 @@ const config: Config = {
         slideUp:   { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
         slideDown: { '0%': { opacity: '0', transform: 'translateY(-10px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
         scaleIn:   { '0%': { opacity: '0', transform: 'scale(0.95)' }, '100%': { opacity: '1', transform: 'scale(1)' } },
-        pulseGlow: { '0%, 100%': { boxShadow: '0 0 15px rgba(102, 0, 255, 0.2)' }, '50%': { boxShadow: '0 0 40px rgba(102, 0, 255, 0.4)' } },
+        pulseGlow: { '0%, 100%': { boxShadow: '0 0 15px rgba(245, 158, 11, 0.2)' }, '50%': { boxShadow: '0 0 40px rgba(245, 158, 11, 0.4)' } },
         float:     { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
       },
     },
@@ -141,7 +141,7 @@ export function GlassCard({ children, className = '', hover = true }: GlassCardP
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: 'easeOut' }}
-      whileHover={hover ? { y: -4, boxShadow: '0 8px 40px rgba(102, 0, 255, 0.15)' } : undefined}
+      whileHover={hover ? { y: -4, boxShadow: '0 8px 40px rgba(245, 158, 11, 0.15)' } : undefined}
       className={`
         relative overflow-hidden rounded-2xl
         bg-white/5 backdrop-blur-xl
@@ -379,7 +379,7 @@ export function PageLayout({ children }: { children: ReactNode }) {
         <nav className="sticky top-0 z-50 border-b border-white/5 bg-surface-950/80 backdrop-blur-xl">
           <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
             <span className="text-heading-sm font-bold bg-gradient-to-r from-primary-400 to-primary-200 bg-clip-text text-transparent">
-              MonadApp
+              MyApp
             </span>
             {/* Add navigation items here */}
           </div>

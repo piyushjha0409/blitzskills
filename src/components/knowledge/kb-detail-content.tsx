@@ -50,7 +50,7 @@ export function KBDetailContent({ kb }: { kb: KnowledgeBase }) {
         {/* Back */}
         <Link
           href="/knowledge"
-          className="mb-6 inline-flex items-center gap-1 text-xs text-gray-400 transition-colors hover:text-purple-500 sm:text-sm"
+          className="mb-6 inline-flex items-center gap-1 text-xs text-gray-400 transition-colors hover:text-amber-500 sm:text-sm"
         >
           <ChevronLeft className="h-3.5 w-3.5" />
           Back to Knowledge Base
@@ -60,7 +60,7 @@ export function KBDetailContent({ kb }: { kb: KnowledgeBase }) {
           {/* Main content */}
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2.5 mb-3">
-              <span className="rounded-md bg-purple-50 px-2.5 py-1 text-xs font-semibold text-purple-600">
+              <span className="rounded-md bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-600">
                 {kb.meta.category}
               </span>
               <span className="rounded-md bg-gray-50 px-2.5 py-1 text-xs font-medium text-gray-400">
@@ -79,11 +79,11 @@ export function KBDetailContent({ kb }: { kb: KnowledgeBase }) {
             {/* KB.md — rendered as a file document */}
             <div className="mt-8 rounded-xl border border-gray-200 overflow-hidden">
               <div className="flex items-center gap-2 border-b border-gray-200 bg-gray-50 px-4 py-2.5">
-                <BookOpen className="h-4 w-4 text-purple-400" />
+                <BookOpen className="h-4 w-4 text-amber-400" />
                 <span className="text-sm font-medium text-gray-700">KB.md</span>
               </div>
               <div className="p-5 sm:p-6">
-                <div className="prose prose-sm prose-gray max-w-none overflow-hidden prose-headings:text-gray-900 prose-p:text-gray-600 prose-li:text-gray-600 prose-strong:text-gray-700 prose-code:rounded prose-code:bg-purple-50 prose-code:px-1.5 prose-code:py-0.5 prose-code:text-purple-600 prose-code:font-semibold prose-code:before:content-none prose-code:after:content-none prose-pre:overflow-x-auto prose-pre:bg-gray-50 prose-pre:border prose-pre:border-gray-200 prose-th:text-gray-700 prose-td:text-gray-600">
+                <div className="prose prose-sm prose-gray max-w-none overflow-hidden prose-headings:text-gray-900 prose-p:text-gray-600 prose-li:text-gray-600 prose-strong:text-gray-700 prose-code:rounded prose-code:bg-amber-50 prose-code:px-1.5 prose-code:py-0.5 prose-code:text-amber-600 prose-code:font-semibold prose-code:before:content-none prose-code:after:content-none prose-pre:overflow-x-auto prose-pre:bg-gray-50 prose-pre:border prose-pre:border-gray-200 prose-th:text-gray-700 prose-td:text-gray-600">
                   <Markdown remarkPlugins={[remarkGfm]}>{kb.body}</Markdown>
                 </div>
               </div>
@@ -94,16 +94,16 @@ export function KBDetailContent({ kb }: { kb: KnowledgeBase }) {
           <div className="w-full shrink-0 lg:w-72">
             <div className="sticky top-20 space-y-4">
               {/* Agent URL — primary action */}
-              <div className="rounded-xl border border-purple-200 bg-purple-50/50 p-4">
-                <p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-purple-600">
+              <div className="rounded-xl border border-amber-200 bg-amber-50/50 p-4">
+                <p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-amber-600">
                   Agent Fetch URL
                 </p>
-                <p className="mb-3 text-xs text-purple-600/70">
+                <p className="mb-3 text-xs text-amber-600/70">
                   Point your AI agent to this URL to give it this knowledge instantly.
                 </p>
                 <button
                   onClick={handleCopyUrl}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-purple-600 py-2.5 text-sm font-semibold text-white transition-all hover:bg-purple-500"
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-amber-600 py-2.5 text-sm font-semibold text-white transition-all hover:bg-amber-500"
                 >
                   {urlCopied ? (
                     <><Check className="h-4 w-4" /> Copied</>
@@ -116,7 +116,7 @@ export function KBDetailContent({ kb }: { kb: KnowledgeBase }) {
               {/* Download */}
               <button
                 onClick={handleDownload}
-                className="flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-purple-100 text-sm font-semibold text-purple-700 transition-all hover:bg-purple-600 hover:text-white"
+                className="flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-amber-100 text-sm font-semibold text-amber-700 transition-all hover:bg-amber-600 hover:text-white"
               >
                 <Download className="h-4 w-4" />
                 Download KB.md
@@ -174,7 +174,7 @@ export function KBDetailContent({ kb }: { kb: KnowledgeBase }) {
                   File
                 </p>
                 <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <BookOpen className="h-3.5 w-3.5 text-purple-400" />
+                  <BookOpen className="h-3.5 w-3.5 text-amber-400" />
                   KB.md
                 </div>
               </div>

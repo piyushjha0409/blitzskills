@@ -1,6 +1,6 @@
 export const KB_CATEGORIES = [
   "All",
-  "Monad Basics",
+  "Blockchain Fundamentals",
   "Smart Contracts",
   "Wallet & Frontend",
   "Deployment & Infra",

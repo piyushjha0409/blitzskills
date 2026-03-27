@@ -27,8 +27,8 @@ export function Navbar() {
     <header className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white/80 backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-3xl items-center justify-between px-5 sm:px-8 lg:max-w-4xl">
         <Link href="/" className="group flex items-center gap-1.5">
-          <span className="text-lg">⚡️</span>
-          <span className="text-sm font-bold text-gray-900 transition-colors group-hover:text-purple-600">BlitzSkills</span>
+          <img src="/logo.svg" alt="SkillForge" className="h-6 w-6" />
+          <span className="text-sm font-bold text-gray-900 transition-colors group-hover:text-amber-600">SkillForge</span>
         </Link>
 
         {/* Desktop nav */}
@@ -41,8 +41,8 @@ export function Navbar() {
                 className={cn(
                   "text-sm",
                   pathname === link.href
-                    ? "bg-purple-50 text-purple-700 font-semibold"
-                    : "text-gray-500 hover:text-purple-600 hover:bg-purple-50/50"
+                    ? "bg-amber-50 text-amber-700 font-semibold"
+                    : "text-gray-500 hover:text-amber-600 hover:bg-amber-50/50"
                 )}
               >
                 {link.label}
@@ -84,7 +84,7 @@ export function Navbar() {
                     className={cn(
                       "w-full justify-start",
                       pathname === link.href
-                        ? "bg-purple-50 text-purple-700"
+                        ? "bg-amber-50 text-amber-700"
                         : "text-gray-500"
                     )}
                   >

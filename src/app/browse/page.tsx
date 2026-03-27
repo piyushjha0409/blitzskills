@@ -120,7 +120,7 @@ function BrowseContent() {
           New here?{" "}
           <Link
             href="/tutorial"
-            className="font-medium text-purple-500 transition-colors hover:text-purple-600"
+            className="font-medium text-amber-500 transition-colors hover:text-amber-600"
           >
             Read the guide
           </Link>
@@ -134,7 +134,7 @@ function BrowseContent() {
               {filtered.length === 1 ? "template" : "templates"}
               {activeCategory !== "All" && (
                 <span>
-                  {" "}in <span className="font-medium text-purple-600">{activeCategory}</span>
+                  {" "}in <span className="font-medium text-amber-600">{activeCategory}</span>
                 </span>
               )}
             </p>
@@ -148,7 +148,7 @@ function BrowseContent() {
               value={search}
               onChange={(e) => { setSearch(e.target.value); updateURL(e.target.value, activeCategory, activeTag); }}
               placeholder="Search..."
-              className="h-9 w-full rounded-lg border border-gray-200 bg-white pl-9 pr-14 text-sm text-gray-800 placeholder:text-gray-300 outline-none transition-all focus:border-purple-300 focus:ring-2 focus:ring-purple-100"
+              className="h-9 w-full rounded-lg border border-gray-200 bg-white pl-9 pr-14 text-sm text-gray-800 placeholder:text-gray-300 outline-none transition-all focus:border-amber-300 focus:ring-2 focus:ring-amber-100"
             />
             {!search && (
               <kbd className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 rounded border border-gray-200 bg-gray-50 px-1.5 py-0.5 text-[10px] font-medium text-gray-400">
@@ -174,8 +174,8 @@ function BrowseContent() {
               onClick={() => handleCategoryChange(cat)}
               className={`shrink-0 rounded-full px-3 py-1.5 text-[11px] font-semibold transition-all sm:text-xs ${
                 activeCategory === cat
-                  ? "bg-purple-600 text-white"
-                  : "bg-gray-100 text-gray-500 hover:bg-purple-50 hover:text-purple-600"
+                  ? "bg-amber-600 text-white"
+                  : "bg-gray-100 text-gray-500 hover:bg-amber-50 hover:text-amber-600"
               }`}
             >
               {cat}
@@ -192,8 +192,8 @@ function BrowseContent() {
                 onClick={() => { const next = activeTag === tag ? null : tag; setActiveTag(next); updateURL(search, activeCategory, next); }}
                 className={`shrink-0 rounded-full px-2.5 py-1 text-[10px] font-medium transition-all sm:text-[11px] ${
                   activeTag === tag
-                    ? "bg-purple-100 text-purple-700"
-                    : "text-gray-400 hover:bg-purple-50 hover:text-purple-600"
+                    ? "bg-amber-100 text-amber-700"
+                    : "text-gray-400 hover:bg-amber-50 hover:text-amber-600"
                 }`}
               >
                 {tag}
@@ -202,7 +202,7 @@ function BrowseContent() {
             {hiddenCount > 0 && (
               <button
                 onClick={() => setShowAllTags(!showAllTags)}
-                className="hidden shrink-0 rounded-full border border-dashed border-gray-200 px-2.5 py-1 text-[10px] font-medium text-gray-400 transition-all hover:border-purple-300 hover:text-purple-500 sm:inline-flex sm:text-[11px]"
+                className="hidden shrink-0 rounded-full border border-dashed border-gray-200 px-2.5 py-1 text-[10px] font-medium text-gray-400 transition-all hover:border-amber-300 hover:text-amber-500 sm:inline-flex sm:text-[11px]"
               >
                 {showAllTags ? "Show less" : `+${hiddenCount} more`}
               </button>
@@ -231,13 +231,13 @@ function BrowseContent() {
 
         {/* Active collection banner */}
         {activeCollection.length > 0 && (
-          <div className="mt-6 flex items-center justify-between rounded-lg bg-purple-50 px-4 py-3 sm:mt-8">
-            <p className="text-sm font-medium text-purple-700">
+          <div className="mt-6 flex items-center justify-between rounded-lg bg-amber-50 px-4 py-3 sm:mt-8">
+            <p className="text-sm font-medium text-amber-700">
               Showing {activeCollection.length} skills from collection
             </p>
             <button
               onClick={() => setActiveCollection([])}
-              className="text-xs font-medium text-purple-500 transition-colors hover:text-purple-700"
+              className="text-xs font-medium text-amber-500 transition-colors hover:text-amber-700"
             >
               Clear
             </button>
@@ -254,7 +254,7 @@ function BrowseContent() {
                 >
                   <div className="p-4 sm:p-5">
                     <div className="flex items-center gap-3">
-                      <div className="h-9 w-9 animate-pulse rounded-lg bg-purple-50" />
+                      <div className="h-9 w-9 animate-pulse rounded-lg bg-amber-50" />
                       <div className="flex-1 space-y-2">
                         <div className="h-4 w-32 animate-pulse rounded bg-gray-100" />
                         <div className="h-3 w-20 animate-pulse rounded bg-gray-50" />
@@ -265,9 +265,9 @@ function BrowseContent() {
                       <div className="h-3 w-2/3 animate-pulse rounded bg-gray-50" />
                     </div>
                     <div className="mt-3 flex gap-1.5">
-                      <div className="h-5 w-12 animate-pulse rounded-md bg-purple-50" />
-                      <div className="h-5 w-14 animate-pulse rounded-md bg-purple-50" />
-                      <div className="h-5 w-10 animate-pulse rounded-md bg-purple-50" />
+                      <div className="h-5 w-12 animate-pulse rounded-md bg-amber-50" />
+                      <div className="h-5 w-14 animate-pulse rounded-md bg-amber-50" />
+                      <div className="h-5 w-10 animate-pulse rounded-md bg-amber-50" />
                     </div>
                   </div>
                   <div className="border-t border-gray-200 px-4 py-2.5 sm:px-5">
@@ -281,7 +281,7 @@ function BrowseContent() {
         {/* Empty */}
         {!loading && filtered.length === 0 && (
           <div className="mt-10 flex flex-col items-center py-16 text-center">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-purple-50 text-purple-400">
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-50 text-amber-400">
               <Search className="h-6 w-6" />
             </div>
             <p className="mt-4 text-sm font-medium text-gray-700">
@@ -299,7 +299,7 @@ function BrowseContent() {
                   Did you mean{" "}
                   <button
                     onClick={() => { setSearch(suggestion); updateURL(suggestion, activeCategory, activeTag); }}
-                    className="font-medium text-purple-500 hover:text-purple-600"
+                    className="font-medium text-amber-500 hover:text-amber-600"
                   >
                     {suggestion}
                   </button>
@@ -310,14 +310,14 @@ function BrowseContent() {
             {(search || activeTag || activeCategory !== "All") ? (
               <button
                 onClick={() => { setSearch(""); setActiveTag(null); setActiveCategory("All"); updateURL("", "All", null); }}
-                className="mt-4 inline-flex h-8 items-center rounded-full bg-purple-100 px-4 text-xs font-semibold text-purple-700 transition-all hover:bg-purple-600 hover:text-white"
+                className="mt-4 inline-flex h-8 items-center rounded-full bg-amber-100 px-4 text-xs font-semibold text-amber-700 transition-all hover:bg-amber-600 hover:text-white"
               >
                 Clear filters
               </button>
             ) : (
               <Link
                 href="/tutorial"
-                className="mt-4 inline-flex h-8 items-center rounded-full bg-purple-100 px-4 text-xs font-semibold text-purple-700 transition-all hover:bg-purple-600 hover:text-white"
+                className="mt-4 inline-flex h-8 items-center rounded-full bg-amber-100 px-4 text-xs font-semibold text-amber-700 transition-all hover:bg-amber-600 hover:text-white"
               >
                 Learn how to create one
               </Link>

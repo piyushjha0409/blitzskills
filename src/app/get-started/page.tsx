@@ -77,7 +77,7 @@ export default function GetStartedPage() {
         <div className="mt-8 flex gap-6 sm:mt-10 sm:gap-8">
           {STEPS.map((step) => (
             <div key={step.num} className="flex items-start gap-2.5">
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-purple-100 text-[11px] font-bold text-purple-600">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-amber-100 text-[11px] font-bold text-amber-600">
                 {step.num}
               </span>
               <div>
@@ -106,17 +106,17 @@ export default function GetStartedPage() {
                   onClick={() => setSelected(isSelected ? null : path.id)}
                   className={`flex items-center gap-3 rounded-xl border p-4 text-left transition-all ${
                     isSelected
-                      ? "border-purple-300 bg-purple-50 shadow-sm"
-                      : "border-gray-200 bg-white hover:border-purple-200 hover:shadow-sm"
+                      ? "border-amber-300 bg-amber-50 shadow-sm"
+                      : "border-gray-200 bg-white hover:border-amber-200 hover:shadow-sm"
                   }`}
                 >
                   <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${
-                    isSelected ? "bg-purple-200 text-purple-700" : "bg-purple-50 text-purple-500"
+                    isSelected ? "bg-amber-200 text-amber-700" : "bg-amber-50 text-amber-500"
                   }`}>
                     <Icon className="h-5 w-5" />
                   </div>
                   <div>
-                    <p className={`text-sm font-semibold ${isSelected ? "text-purple-700" : "text-gray-800"}`}>
+                    <p className={`text-sm font-semibold ${isSelected ? "text-amber-700" : "text-gray-800"}`}>
                       {path.label}
                     </p>
                     <p className="mt-0.5 text-[11px] text-gray-400">{path.desc}</p>
@@ -129,13 +129,13 @@ export default function GetStartedPage() {
 
         {/* Recommendation */}
         {selectedPath && (
-          <div className="mt-8 rounded-xl border border-purple-200 bg-purple-50/50 p-5 sm:mt-10 sm:p-6">
-            <h3 className="text-sm font-semibold text-purple-800 sm:text-base">
+          <div className="mt-8 rounded-xl border border-amber-200 bg-amber-50/50 p-5 sm:mt-10 sm:p-6">
+            <h3 className="text-sm font-semibold text-amber-800 sm:text-base">
               Recommended skills for {selectedPath.label}
             </h3>
-            <p className="mt-1 text-xs text-purple-600/70">
+            <p className="mt-1 text-xs text-amber-600/70">
               Download these skill templates and drop them in your project&apos;s{" "}
-              <code className="rounded bg-purple-100 px-1 py-0.5 text-[11px] font-semibold">.claude/skills/</code>{" "}
+              <code className="rounded bg-amber-100 px-1 py-0.5 text-[11px] font-semibold">.claude/skills/</code>{" "}
               folder.
             </p>
 
@@ -144,10 +144,10 @@ export default function GetStartedPage() {
                 <Link
                   key={slug}
                   href={`/browse/${slug}`}
-                  className="flex items-center justify-between rounded-lg border border-purple-200 bg-white px-4 py-3 transition-all hover:border-purple-300 hover:shadow-sm"
+                  className="flex items-center justify-between rounded-lg border border-amber-200 bg-white px-4 py-3 transition-all hover:border-amber-300 hover:shadow-sm"
                 >
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-purple-400" />
+                    <CheckCircle2 className="h-4 w-4 text-amber-400" />
                     <span className="text-sm font-medium text-gray-800">{slug}</span>
                   </div>
                   <ChevronRight className="h-4 w-4 text-gray-300" />
@@ -158,7 +158,7 @@ export default function GetStartedPage() {
             <div className="mt-5 flex flex-col gap-3 sm:flex-row">
               <Link
                 href={`/browse?category=${selectedPath.label === "Exploring" ? "All" : selectedPath.label === "NFTs" ? "Smart+Contracts" : selectedPath.label === "Infrastructure" ? "Smart+Contracts" : selectedPath.label}`}
-                className="inline-flex h-10 items-center justify-center rounded-lg bg-purple-600 px-5 text-sm font-semibold text-white transition-all hover:bg-purple-500 hover:shadow-lg hover:shadow-purple-200"
+                className="inline-flex h-10 items-center justify-center rounded-lg bg-amber-600 px-5 text-sm font-semibold text-white transition-all hover:bg-amber-500 hover:shadow-lg hover:shadow-amber-200"
               >
                 Browse these skills
               </Link>

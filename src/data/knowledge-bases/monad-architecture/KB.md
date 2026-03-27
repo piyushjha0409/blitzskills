@@ -1,7 +1,7 @@
 ---
 name: Monad Architecture Deep Dive
 description: How Monad achieves 10K TPS — MonadBFT consensus, optimistic parallel execution, asynchronous execution, and MonadDb.
-category: Monad Basics
+category: Blockchain Fundamentals
 topic: architecture
 author: Piyush Jha
 version: "1.1.0"

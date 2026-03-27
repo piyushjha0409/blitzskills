@@ -1,6 +1,6 @@
 ---
 name: fullstack-web3-dev
-description: Build full stack Web3 applications on Monad — Next.js frontends with wallet connection, smart contract integration, and deployment. Use when building dApps, connecting wallets, setting up Wagmi/Viem, or building any frontend that interacts with Monad contracts.
+description: Build full stack Web3 applications on EVM chains — Next.js frontends with wallet connection, smart contract integration, and deployment. Use when building dApps, connecting wallets, setting up Wagmi/Viem, or building any frontend that interacts with smart contracts.
 category: Full Stack
 difficulty: intermediate
 author: Piyush Jha
@@ -14,14 +14,14 @@ skills:
   - Ethers.js / Viem
 ---
 
-You are a full stack Web3 developer agent. You build production-grade dApps on Monad — from smart contracts to polished frontends with seamless wallet integration.
+You are a full stack Web3 developer agent. You build production-grade dApps on EVM-compatible chains — from smart contracts to polished frontends with seamless wallet integration.
 
-## Monad Network Reference
+## Network Reference (Example)
 
 | Network | Chain ID | RPC URL | Explorer |
 |---------|----------|---------|----------|
-| **Mainnet** | 143 | `https://rpc.monad.xyz` | monadscan.com |
-| **Testnet** | 10143 | `https://testnet-rpc.monad.xyz` | testnet.monadscan.com |
+| **Ethereum Mainnet** | 1 | `https://eth.llamarpc.com` | etherscan.io |
+| **Sepolia Testnet** | 11155111 | `https://rpc.sepolia.org` | sepolia.etherscan.io |
 
 ## Project Setup
 
@@ -33,34 +33,27 @@ cd my-dapp
 npm install wagmi viem @tanstack/react-query @rainbow-me/rainbowkit
 ```
 
-### Monad Chain Configuration
+### Chain Configuration
 
-Create `lib/chains.ts`:
+Create `lib/chains.ts` (example using Ethereum — swap for any EVM chain):
 
 ```typescript
 import { defineChain } from 'viem'
+import { mainnet, sepolia } from 'viem/chains'
 
-export const monadMainnet = defineChain({
-  id: 143,
-  name: 'Monad',
-  nativeCurrency: { name: 'MON', symbol: 'MON', decimals: 18 },
+// You can use built-in chain definitions:
+export { mainnet, sepolia }
+
+// Or define a custom EVM chain:
+export const myChain = defineChain({
+  id: 1,
+  name: 'Ethereum',
+  nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
   rpcUrls: {
-    default: { http: ['https://rpc.monad.xyz'] },
+    default: { http: ['https://eth.llamarpc.com'] },
   },
   blockExplorers: {
-    default: { name: 'Monadscan', url: 'https://monadscan.com' },
-  },
-})
-
-export const monadTestnet = defineChain({
-  id: 10143,
-  name: 'Monad Testnet',
-  nativeCurrency: { name: 'MON', symbol: 'MON', decimals: 18 },
-  rpcUrls: {
-    default: { http: ['https://testnet-rpc.monad.xyz'] },
-  },
-  blockExplorers: {
-    default: { name: 'Monadscan', url: 'https://testnet.monadscan.com' },
+    default: { name: 'Etherscan', url: 'https://etherscan.io' },
   },
 })
 ```
@@ -71,12 +64,12 @@ Create `lib/wagmi.ts`:
 
 ```typescript
 import { getDefaultConfig } from '@rainbow-me/rainbowkit'
-import { monadMainnet, monadTestnet } from './chains'
+import { mainnet, sepolia } from './chains'
 
 export const config = getDefaultConfig({
-  appName: 'My Monad dApp',
+  appName: 'My dApp',
   projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID!,
-  chains: [monadMainnet, monadTestnet],
+  chains: [mainnet, sepolia],
 })
 ```
 
@@ -191,14 +184,14 @@ For operations that need a private key, use API routes:
 // app/api/mint/route.ts
 import { createWalletClient, http } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
-import { monadMainnet } from '@/lib/chains'
+import { mainnet } from '@/lib/chains'
 
 export async function POST(req: Request) {
   const { to, amount } = await req.json()
   const account = privateKeyToAccount(process.env.PRIVATE_KEY as `0x${string}`)
   const client = createWalletClient({
     account,
-    chain: monadMainnet,
+    chain: mainnet,
     transport: http(),
   })
 
@@ -238,7 +231,7 @@ Set environment variables in Vercel dashboard.
 
 ## When to Use
 
-- Building Next.js frontends that interact with Monad contracts
+- Building Next.js frontends that interact with smart contracts
 - Setting up wallet connection (RainbowKit, Wagmi)
 - Reading/writing contract data from the frontend
 - Creating API routes for server-side blockchain operations

@@ -26,17 +26,17 @@ export function CollectionCard({
       onClick={() => onSelect(active ? [] : collection.skillSlugs)}
       className={`flex shrink-0 items-center gap-3 rounded-xl border px-4 py-3 text-left transition-all sm:px-5 sm:py-4 ${
         active
-          ? "border-purple-300 bg-purple-50 shadow-sm"
-          : "border-gray-200 bg-white hover:border-purple-200 hover:shadow-sm"
+          ? "border-amber-300 bg-amber-50 shadow-sm"
+          : "border-gray-200 bg-white hover:border-amber-200 hover:shadow-sm"
       }`}
     >
       <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${
-        active ? "bg-purple-200 text-purple-700" : "bg-purple-50 text-purple-500"
+        active ? "bg-amber-200 text-amber-700" : "bg-amber-50 text-amber-500"
       }`}>
         <Icon className="h-4 w-4" />
       </div>
       <div className="min-w-0">
-        <p className={`text-sm font-semibold ${active ? "text-purple-700" : "text-gray-800"}`}>
+        <p className={`text-sm font-semibold ${active ? "text-amber-700" : "text-gray-800"}`}>
           {collection.name}
         </p>
         <p className="mt-0.5 text-[11px] text-gray-400 sm:text-xs">

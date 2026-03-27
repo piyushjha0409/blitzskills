@@ -1,7 +1,7 @@
 ---
 name: Why Build on Monad
-description: Understanding Monad's 10,000 TPS, 400ms blocks, EVM compatibility, and why it's the right chain for your project.
-category: Monad Basics
+description: Understanding Monad's 10,000 TPS, 400ms blocks, and EVM compatibility — a high-performance Layer 1 option for your project.
+category: Blockchain Fundamentals
 topic: blockchain
 author: Piyush Jha
 version: "1.1.0"

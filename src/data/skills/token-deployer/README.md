@@ -1,6 +1,6 @@
 # Token Deployer
 
-Deploy and manage ERC-20 tokens on Monad with supply management, vesting, airdrops, and governance.
+Deploy and manage ERC-20 tokens on EVM chains with supply management, vesting, airdrops, and governance.
 
 ## What This Skill Does
 
@@ -17,7 +17,7 @@ Equips your agent with token deployment expertise — from creating ERC-20 contr
 
 ## Ideal For
 
-Builders creating project tokens, governance systems, airdrop campaigns, or any token-based application on Monad.
+Builders creating project tokens, governance systems, airdrop campaigns, or any token-based application on EVM chains.
 
 ## Installation
 

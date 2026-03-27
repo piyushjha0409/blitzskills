@@ -4,7 +4,7 @@ Skill template for blockchain developers specializing in Solidity and smart cont
 
 ## What This Skill Does
 
-Equips your agent with deep knowledge of Solidity smart contract development — from writing and testing contracts to gas optimization and security auditing. Optimized for the Monad ecosystem.
+Equips your agent with deep knowledge of Solidity smart contract development — from writing and testing contracts to gas optimization and security auditing. Works with any EVM-compatible chain.
 
 ## Skills Covered
 
@@ -19,7 +19,7 @@ Equips your agent with deep knowledge of Solidity smart contract development —
 
 ## Ideal For
 
-Builders focused on the smart contract layer — writing secure, gas-efficient Solidity for DeFi protocols, NFT platforms, DAOs, or any on-chain application on Monad and other EVM chains.
+Builders focused on the smart contract layer — writing secure, gas-efficient Solidity for DeFi protocols, NFT platforms, DAOs, or any on-chain application on EVM-compatible chains.
 
 ## Installation
 

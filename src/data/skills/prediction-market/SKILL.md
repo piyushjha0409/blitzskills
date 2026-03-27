@@ -1,6 +1,6 @@
 ---
 name: prediction-market
-description: "ACTIVATE when the user wants to build, deploy, or design a prediction market, betting protocol, or binary options platform on Monad. Triggers on: prediction market, betting, binary outcome, conditional tokens, oracle resolution, market maker, CPMM, LMSR, outcome trading, event betting, futarchy, Monad prediction. Use this skill for ANY task involving outcome-based trading or prediction protocols on Monad Network."
+description: "ACTIVATE when the user wants to build, deploy, or design a prediction market, betting protocol, or binary options platform on EVM chains. Triggers on: prediction market, betting, binary outcome, conditional tokens, oracle resolution, market maker, CPMM, LMSR, outcome trading, event betting, futarchy. Use this skill for ANY task involving outcome-based trading or prediction protocols on EVM-compatible chains."
 category: DeFi
 difficulty: advanced
 author: Piyush Jha
@@ -11,24 +11,25 @@ skills:
   - Oracle Integration
   - Order Matching
   - DeFi
-  - Monad
+  - EVM
 ---
 
 ## Instructions
 
-You are a **Prediction Market Protocol Architect** for Monad Network. Your job is to help users design, build, and deploy production-grade prediction market protocols — including market creation, conditional tokens, CPMM/LMSR scoring rules, oracle integration, and settlement mechanics — all leveraging Monad's high throughput for real-time trading.
+You are a **Prediction Market Protocol Architect** for EVM-compatible chains. Your job is to help users design, build, and deploy production-grade prediction market protocols — including market creation, conditional tokens, CPMM/LMSR scoring rules, oracle integration, and settlement mechanics.
 
 ---
 
-## Monad Network Reference
+## Network Reference (Example)
 
-| Field | Mainnet | Testnet |
+Configure for your target EVM chain. Example values:
+
+| Field | Mainnet (Ethereum) | Testnet (Sepolia) |
 |---|---|---|
-| **Chain ID** | 143 | 10143 |
-| **RPC URL** | `https://rpc.monad.xyz` | `https://testnet-rpc.monad.xyz` |
-| **Explorer** | `https://explorer.monad.xyz` | `https://testnet.monadexplorer.com` |
-| **Currency** | MON | MON |
-| **Block Time** | ~500ms | ~500ms |
+| **Chain ID** | 1 | 11155111 |
+| **RPC URL** | `https://eth.llamarpc.com` | `https://rpc.sepolia.org` |
+| **Explorer** | `https://etherscan.io` | `https://sepolia.etherscan.io` |
+| **Currency** | ETH | ETH |
 
 ---
 
@@ -112,7 +113,7 @@ contract PredictionMarket is ReentrancyGuard {
         address oracle;
     }
 
-    IERC20 public immutable collateralToken;   // e.g. USDC or MON
+    IERC20 public immutable collateralToken;   // e.g. USDC or native wrapped token
     uint256 public nextMarketId;
     uint256 public constant FEE_BPS = 50;      // 0.5% trading fee
     uint256 public constant INITIAL_LIQUIDITY = 1000e18;
@@ -315,7 +316,7 @@ contract MarketFactory {
 
 ---
 
-## Step 5 — Deploy to Monad
+## Step 5 — Deploy to Your Target Chain
 
 ### Deploy Script
 
@@ -331,7 +332,7 @@ contract DeployPrediction is Script {
         uint256 deployerKey = vm.envUint("PRIVATE_KEY");
         vm.startBroadcast(deployerKey);
 
-        // Use MON or a stablecoin as collateral
+        // Use a stablecoin or wrapped native token as collateral
         address collateral = 0xYourCollateralToken;
         PredictionMarket pm = new PredictionMarket(collateral);
         console.log("PredictionMarket:", address(pm));
@@ -344,14 +345,14 @@ contract DeployPrediction is Script {
 ### Deploy Commands
 
 ```bash
-# Testnet
+# Testnet (example: Sepolia)
 forge script script/Deploy.s.sol:DeployPrediction \
-  --rpc-url https://testnet-rpc.monad.xyz \
+  --rpc-url https://rpc.sepolia.org \
   --broadcast --verify
 
-# Mainnet
+# Mainnet (example: Ethereum)
 forge script script/Deploy.s.sol:DeployPrediction \
-  --rpc-url https://rpc.monad.xyz \
+  --rpc-url https://eth.llamarpc.com \
   --broadcast --verify
 ```
 
@@ -377,7 +378,7 @@ forge script script/Deploy.s.sol:DeployPrediction \
 - User needs **oracle integration** for market resolution (Chainlink, Pyth, UMA)
 - User asks about **conditional tokens** (ERC-1155 outcome positions)
 - User wants to build a **futarchy** or **information market** protocol
-- User mentions **Polymarket-style** or **Manifold-style** markets on Monad
+- User mentions **Polymarket-style** or **Manifold-style** markets on EVM chains
 
 ## When NOT to Use
 

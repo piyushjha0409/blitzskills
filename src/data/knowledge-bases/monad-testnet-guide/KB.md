@@ -1,7 +1,7 @@
 ---
 name: Monad Network Setup Guide
 description: Complete network configuration for Monad Mainnet and Testnet — RPC endpoints, chain IDs, faucet, block explorers, and wallet setup.
-category: Monad Basics
+category: Blockchain Fundamentals
 topic: network
 author: Piyush Jha
 version: "1.1.0"

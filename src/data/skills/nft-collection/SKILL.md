@@ -1,6 +1,6 @@
 ---
 name: nft-collection
-description: "ACTIVATE when the user wants to create, launch, deploy, or mint an NFT collection on Monad. Triggers on: NFT, ERC-721, ERC-1155, mint page, allowlist, whitelist, IPFS metadata, reveal mechanic, generative art, PFP collection, NFT drop, NFT marketplace, minting dApp, Monad NFT. Use this skill for ANY task involving non-fungible tokens on Monad Network."
+description: "ACTIVATE when the user wants to create, launch, deploy, or mint an NFT collection on EVM chains. Triggers on: NFT, ERC-721, ERC-1155, mint page, allowlist, whitelist, IPFS metadata, reveal mechanic, generative art, PFP collection, NFT drop, NFT marketplace, minting dApp. Use this skill for ANY task involving non-fungible tokens on EVM-compatible chains."
 category: Smart Contracts
 difficulty: beginner
 author: Piyush Jha
@@ -11,37 +11,38 @@ skills:
   - ERC-1155
   - IPFS
   - Metadata
-  - Monad
+  - EVM
 ---
 
 ## Instructions
 
-You are an **NFT Collection Launch Specialist** for Monad Network. Your job is to help users design, deploy, and launch production-grade NFT collections with allowlist minting, IPFS metadata, reveal mechanics, royalties, and mint page frontends — all optimized for Monad's sub-second finality.
+You are an **NFT Collection Launch Specialist** for EVM-compatible chains. Your job is to help users design, deploy, and launch production-grade NFT collections with allowlist minting, IPFS metadata, reveal mechanics, royalties, and mint page frontends.
 
 ---
 
-## Monad Network Reference
+## Network Reference (Example)
 
-| Field | Mainnet | Testnet |
+Configure for your target EVM chain. Example values:
+
+| Field | Mainnet (Ethereum) | Testnet (Sepolia) |
 |---|---|---|
-| **Chain ID** | 143 | 10143 |
-| **RPC URL** | `https://rpc.monad.xyz` | `https://testnet-rpc.monad.xyz` |
-| **Explorer** | `https://explorer.monad.xyz` | `https://testnet.monadexplorer.com` |
-| **Currency** | MON | MON |
-| **Block Time** | ~500ms | ~500ms |
+| **Chain ID** | 1 | 11155111 |
+| **RPC URL** | `https://eth.llamarpc.com` | `https://rpc.sepolia.org` |
+| **Explorer** | `https://etherscan.io` | `https://sepolia.etherscan.io` |
+| **Currency** | ETH | ETH |
 
 ---
 
-## Step 1 — Install Monad Foundry Toolchain
+## Step 1 — Install Foundry Toolchain
 
 ```bash
-curl -L https://foundry.category.xyz | bash && foundryup --network monad
+curl -L https://foundry.category.xyz | bash && foundryup
 ```
 
 Initialize:
 
 ```bash
-forge init my-nft-collection --template monad
+forge init my-nft-collection
 cd my-nft-collection
 forge install OpenZeppelin/openzeppelin-contracts
 ```
@@ -50,7 +51,7 @@ forge install OpenZeppelin/openzeppelin-contracts
 
 ## Step 2 — ERC-721 Collection Contract (Full Template)
 
-Create `src/MonadNFT.sol`:
+Create `src/MyNFT.sol`:
 
 ```solidity
 // SPDX-License-Identifier: MIT
@@ -63,7 +64,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 
-contract MonadNFT is ERC721, ERC721Enumerable, ERC721Royalty, Ownable {
+contract MyNFT is ERC721, ERC721Enumerable, ERC721Royalty, Ownable {
     using Strings for uint256;
 
     uint256 public constant MAX_SUPPLY = 10_000;
@@ -90,7 +91,7 @@ contract MonadNFT is ERC721, ERC721Enumerable, ERC721Royalty, Ownable {
         bytes32 _merkleRoot,
         string memory preRevealURI,
         address royaltyReceiver
-    ) ERC721("Monad NFT", "MNFT") Ownable(msg.sender) {
+    ) ERC721("My NFT", "MNFT") Ownable(msg.sender) {
         merkleRoot = _merkleRoot;
         _preRevealURI = preRevealURI;
         // 5% royalty (500 basis points)
@@ -193,8 +194,8 @@ contract MonadNFT is ERC721, ERC721Enumerable, ERC721Royalty, Ownable {
 
 ```json
 {
-  "name": "Monad NFT #0",
-  "description": "A unique collectible on the Monad Network.",
+  "name": "My NFT #0",
+  "description": "A unique on-chain collectible.",
   "image": "ipfs://QmYourImageCID/0.png",
   "attributes": [
     { "trait_type": "Background", "value": "Purple" },
@@ -211,11 +212,11 @@ contract MonadNFT is ERC721, ERC721Enumerable, ERC721Royalty, Ownable {
 npm install -g @pinata/sdk
 
 # Upload images folder
-npx pinata-cli upload ./images --name "monad-nft-images"
+npx pinata-cli upload ./images --name "my-nft-images"
 # Returns: QmImageFolderCID
 
 # Upload metadata folder (update image CIDs first)
-npx pinata-cli upload ./metadata --name "monad-nft-metadata"
+npx pinata-cli upload ./metadata --name "my-nft-metadata"
 # Returns: QmMetadataFolderCID
 ```
 
@@ -265,7 +266,7 @@ export function MintPage() {
 
   return (
     <div className="flex flex-col items-center gap-6 p-8">
-      <h1 className="text-4xl font-bold">Monad NFT Mint</h1>
+      <h1 className="text-4xl font-bold">NFT Mint</h1>
       <p className="text-lg text-gray-400">
         {totalSupply?.toString() ?? '...'} / 10,000 minted
       </p>
@@ -273,23 +274,23 @@ export function MintPage() {
       <div className="flex items-center gap-4">
         <button
           onClick={() => setQuantity(Math.max(1, quantity - 1))}
-          className="w-10 h-10 rounded-full bg-purple-600 text-white"
+          className="w-10 h-10 rounded-full bg-amber-600 text-white"
         >-</button>
         <span className="text-2xl font-mono">{quantity}</span>
         <button
           onClick={() => setQuantity(Math.min(3, quantity + 1))}
-          className="w-10 h-10 rounded-full bg-purple-600 text-white"
+          className="w-10 h-10 rounded-full bg-amber-600 text-white"
         >+</button>
       </div>
 
       <p className="text-lg">
-        Total: {(price * quantity).toFixed(2)} MON
+        Total: {(price * quantity).toFixed(2)} ETH
       </p>
 
       <button
         onClick={handleMint}
         disabled={!isConnected || isPending}
-        className="px-8 py-3 bg-purple-600 hover:bg-purple-700 disabled:opacity-50 rounded-xl text-white font-semibold text-lg transition-colors"
+        className="px-8 py-3 bg-amber-600 hover:bg-amber-700 disabled:opacity-50 rounded-xl text-white font-semibold text-lg transition-colors"
       >
         {isPending ? 'Minting...' : isSuccess ? 'Minted!' : 'Mint Now'}
       </button>
@@ -300,7 +301,7 @@ export function MintPage() {
 
 ---
 
-## Step 5 — Deploy to Monad
+## Step 5 — Deploy to Your Target Chain
 
 ### Deploy Script (`script/Deploy.s.sol`)
 
@@ -309,7 +310,7 @@ export function MintPage() {
 pragma solidity ^0.8.20;
 
 import "forge-std/Script.sol";
-import "../src/MonadNFT.sol";
+import "../src/MyNFT.sol";
 
 contract DeployNFT is Script {
     function run() external {
@@ -320,7 +321,7 @@ contract DeployNFT is Script {
         bytes32 merkleRoot = 0x0; // Replace with generated root
         string memory preRevealURI = "ipfs://QmPreRevealCID/hidden.json";
 
-        MonadNFT nft = new MonadNFT(merkleRoot, preRevealURI, deployer);
+        MyNFT nft = new MyNFT(merkleRoot, preRevealURI, deployer);
         console.log("NFT Contract:", address(nft));
 
         vm.stopBroadcast();
@@ -331,14 +332,14 @@ contract DeployNFT is Script {
 ### Deploy Commands
 
 ```bash
-# Testnet
+# Testnet (example: Sepolia)
 forge script script/Deploy.s.sol:DeployNFT \
-  --rpc-url https://testnet-rpc.monad.xyz \
+  --rpc-url https://rpc.sepolia.org \
   --broadcast --verify
 
-# Mainnet
+# Mainnet (example: Ethereum)
 forge script script/Deploy.s.sol:DeployNFT \
-  --rpc-url https://rpc.monad.xyz \
+  --rpc-url https://eth.llamarpc.com \
   --broadcast --verify
 ```
 
@@ -382,7 +383,7 @@ for (const [i, v] of tree.entries()) {
 - User wants a **reveal mechanic** (pre-reveal placeholder)
 - User needs a **mint page** or minting frontend
 - User asks about **royalties** (ERC-2981)
-- User mentions **generative art**, PFP, or NFT drop on Monad
+- User mentions **generative art**, PFP, or NFT drop on EVM chains
 
 ## When NOT to Use
 

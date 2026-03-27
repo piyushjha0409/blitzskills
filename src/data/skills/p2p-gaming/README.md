@@ -1,6 +1,6 @@
 # P2P Gaming Platform
 
-Build peer-to-peer on-chain gaming platforms on Monad with fair game logic, matchmaking, wager escrow, and real-time multiplayer.
+Build peer-to-peer on-chain gaming platforms on EVM chains with fair game logic, matchmaking, wager escrow, and real-time multiplayer.
 
 ## What This Skill Does
 
@@ -17,7 +17,7 @@ Equips your agent with everything needed for on-chain gaming — from Solidity g
 
 ## Ideal For
 
-Builders creating multiplayer on-chain games, P2P betting platforms, or tournament systems on Monad.
+Builders creating multiplayer on-chain games, P2P betting platforms, or tournament systems on EVM chains.
 
 ## Installation
 

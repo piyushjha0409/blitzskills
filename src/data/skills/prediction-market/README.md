@@ -1,6 +1,6 @@
 # Prediction Market Builder
 
-Build on-chain prediction market protocols on Monad with conditional tokens, automated market makers, and oracle-based resolution.
+Build on-chain prediction market protocols on EVM chains with conditional tokens, automated market makers, and oracle-based resolution.
 
 ## What This Skill Does
 
@@ -17,7 +17,7 @@ Equips your agent with the knowledge to build complete prediction market systems
 
 ## Ideal For
 
-Builders creating prediction markets, binary options platforms, or event-based trading protocols on Monad.
+Builders creating prediction markets, binary options platforms, or event-based trading protocols on EVM chains.
 
 ## Installation
 

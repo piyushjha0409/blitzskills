@@ -55,7 +55,7 @@ export default function TutorialPage() {
             <div className="mx-auto flex max-w-2xl items-center py-2 lg:max-w-3xl">
               <Link
                 href="/browse"
-                className="mr-3 flex items-center gap-1 text-xs text-gray-400 transition-colors hover:text-purple-500 sm:text-sm"
+                className="mr-3 flex items-center gap-1 text-xs text-gray-400 transition-colors hover:text-amber-500 sm:text-sm"
               >
                 <ChevronLeft className="h-3.5 w-3.5" />
                 <span className="hidden sm:inline">Back</span>
@@ -68,8 +68,8 @@ export default function TutorialPage() {
                     href={`#${s.id}`}
                     className={`shrink-0 rounded-full px-3 py-1 text-[11px] font-semibold transition-all sm:text-xs ${
                       active === s.id
-                        ? "bg-purple-100 text-purple-700"
-                        : "text-gray-400 hover:bg-purple-50 hover:text-purple-600"
+                        ? "bg-amber-100 text-amber-700"
+                        : "text-gray-400 hover:bg-amber-50 hover:text-amber-600"
                     }`}
                   >
                     {s.label}
@@ -121,7 +121,7 @@ export default function TutorialPage() {
               </p>
               <CodeBlock>{`---
 name: solidity-developer
-description: Skill for agents building smart contracts on Monad and EVM chains.
+description: Skill for agents building smart contracts on EVM-compatible chains.
 skills:
   - Solidity
   - Smart Contracts
@@ -138,7 +138,7 @@ skills:
               <CodeBlock>{`## Instructions
 
 You are a Solidity smart contract developer agent specializing
-in EVM-compatible chains, with deep expertise in Monad.
+in EVM-compatible chains.
 
 ### Core Capabilities
 
@@ -181,7 +181,7 @@ testing, gas optimization, and security auditing.
 
 ## Ideal For
 
-Builders focused on the smart contract layer on Monad.
+Builders focused on the smart contract layer.
 
 ## Installation
 
@@ -206,7 +206,7 @@ Copy this folder into your project's skills directory.`}</CodeBlock>
                 <>Optional <Code>scripts/</Code> and <Code>assets/</Code> subfolders for helpers.</>,
               ].map((text, i) => (
                 <li key={i} className="flex gap-2">
-                  <span className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-purple-300" />
+                  <span className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-amber-300" />
                   <span>{text}</span>
                 </li>
               ))}
@@ -222,7 +222,7 @@ Copy this folder into your project's skills directory.`}</CodeBlock>
       {showTop && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-6 right-6 z-30 flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-400 shadow-lg transition-all hover:text-purple-500"
+          className="fixed bottom-6 right-6 z-30 flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-400 shadow-lg transition-all hover:text-amber-500"
         >
           <ArrowUp className="h-3.5 w-3.5" />
         </button>
@@ -234,7 +234,7 @@ Copy this folder into your project's skills directory.`}</CodeBlock>
 function StepHeader({ num, title }: { num: number; title: string }) {
   return (
     <h2 className="text-sm font-semibold text-gray-800 sm:text-[0.9rem]">
-      <span className="mr-2.5 inline-flex h-6 w-6 items-center justify-center rounded-full bg-purple-100 text-[11px] font-bold text-purple-600 align-middle">
+      <span className="mr-2.5 inline-flex h-6 w-6 items-center justify-center rounded-full bg-amber-100 text-[11px] font-bold text-amber-600 align-middle">
         {num}
       </span>
       {title}
@@ -252,7 +252,7 @@ function CodeBlock({ children }: { children: string }) {
 
 function Code({ children }: { children: React.ReactNode }) {
   return (
-    <code className="rounded bg-purple-50 px-1.5 py-0.5 text-xs font-semibold text-purple-600">
+    <code className="rounded bg-amber-50 px-1.5 py-0.5 text-xs font-semibold text-amber-600">
       {children}
     </code>
   );

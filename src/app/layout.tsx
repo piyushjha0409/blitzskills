@@ -18,9 +18,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Monad Skills Marketplace",
+  title: "SkillForge — Hackathon Skill Templates",
   description:
-    "Skill templates for AI coding agents building on Monad. Browse, download, and start building.",
+    "Skill templates for AI coding agents. Browse, download, and start building — any chain, any hackathon.",
 };
 
 export default function RootLayout({

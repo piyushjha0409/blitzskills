@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const profile = getSkillProfile(slug);
   if (!profile) return {};
   return {
-    title: `${profile.meta.name} | Monad Skills`,
+    title: `${profile.meta.name} | SkillForge`,
     description: profile.meta.description,
   };
 }

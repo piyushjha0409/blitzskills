@@ -30,7 +30,7 @@ export function SkillDetailContent({ profile }: { profile: SkillProfile }) {
         {/* Back */}
         <Link
           href="/browse"
-          className="mb-6 inline-flex items-center gap-1 text-xs text-gray-400 transition-colors hover:text-purple-500 sm:text-sm"
+          className="mb-6 inline-flex items-center gap-1 text-xs text-gray-400 transition-colors hover:text-amber-500 sm:text-sm"
         >
           <ChevronLeft className="h-3.5 w-3.5" />
           Back to Browse
@@ -45,7 +45,7 @@ export function SkillDetailContent({ profile }: { profile: SkillProfile }) {
 
             {/* Badges */}
             <div className="mt-3 flex flex-wrap items-center gap-2">
-              <span className="rounded-md bg-purple-50 px-2.5 py-1 text-xs font-semibold text-purple-600">
+              <span className="rounded-md bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-600">
                 {profile.meta.category}
               </span>
               <span className={`rounded-md px-2.5 py-1 text-xs font-semibold ${diffConfig.bg} ${diffConfig.text}`}>
@@ -68,7 +68,7 @@ export function SkillDetailContent({ profile }: { profile: SkillProfile }) {
                   <span className="text-sm font-medium text-gray-700">README.md</span>
                 </div>
                 <div className="p-5 sm:p-6">
-                  <div className="prose prose-sm prose-gray max-w-none overflow-hidden prose-headings:text-gray-900 prose-p:text-gray-600 prose-li:text-gray-600 prose-strong:text-gray-700 prose-code:rounded prose-code:bg-purple-50 prose-code:px-1.5 prose-code:py-0.5 prose-code:text-purple-600 prose-code:font-semibold prose-code:before:content-none prose-code:after:content-none prose-pre:overflow-x-auto prose-pre:bg-gray-50 prose-pre:border prose-pre:border-gray-200">
+                  <div className="prose prose-sm prose-gray max-w-none overflow-hidden prose-headings:text-gray-900 prose-p:text-gray-600 prose-li:text-gray-600 prose-strong:text-gray-700 prose-code:rounded prose-code:bg-amber-50 prose-code:px-1.5 prose-code:py-0.5 prose-code:text-amber-600 prose-code:font-semibold prose-code:before:content-none prose-code:after:content-none prose-pre:overflow-x-auto prose-pre:bg-gray-50 prose-pre:border prose-pre:border-gray-200">
                     <Markdown remarkPlugins={[remarkGfm]}>{profile.readmeMd}</Markdown>
                   </div>
                 </div>
@@ -78,12 +78,12 @@ export function SkillDetailContent({ profile }: { profile: SkillProfile }) {
             {/* SKILL.md — rendered as a proper file document */}
             <div className="mt-6 rounded-xl border border-gray-200 overflow-hidden">
               <div className="flex items-center gap-2 border-b border-gray-200 bg-gray-50 px-4 py-2.5">
-                <FileText className="h-4 w-4 text-purple-400" />
+                <FileText className="h-4 w-4 text-amber-400" />
                 <span className="text-sm font-medium text-gray-700">SKILL.md</span>
                 <span className="ml-auto text-[10px] text-gray-400">Agent Instructions</span>
               </div>
               <div className="p-5 sm:p-6">
-                <div className="prose prose-sm prose-gray max-w-none overflow-hidden prose-headings:text-gray-900 prose-p:text-gray-600 prose-li:text-gray-600 prose-strong:text-gray-700 prose-code:rounded prose-code:bg-purple-50 prose-code:px-1.5 prose-code:py-0.5 prose-code:text-purple-600 prose-code:font-semibold prose-code:before:content-none prose-code:after:content-none prose-pre:overflow-x-auto prose-pre:bg-gray-50 prose-pre:border prose-pre:border-gray-200">
+                <div className="prose prose-sm prose-gray max-w-none overflow-hidden prose-headings:text-gray-900 prose-p:text-gray-600 prose-li:text-gray-600 prose-strong:text-gray-700 prose-code:rounded prose-code:bg-amber-50 prose-code:px-1.5 prose-code:py-0.5 prose-code:text-amber-600 prose-code:font-semibold prose-code:before:content-none prose-code:after:content-none prose-pre:overflow-x-auto prose-pre:bg-gray-50 prose-pre:border prose-pre:border-gray-200">
                   <Markdown remarkPlugins={[remarkGfm]}>{profile.body}</Markdown>
                 </div>
               </div>
@@ -96,7 +96,7 @@ export function SkillDetailContent({ profile }: { profile: SkillProfile }) {
               {/* Download button */}
               <button
                 onClick={handleDownload}
-                className="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-purple-100 text-sm font-semibold text-purple-700 transition-all hover:bg-purple-600 hover:text-white hover:shadow-lg hover:shadow-purple-200"
+                className="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-amber-100 text-sm font-semibold text-amber-700 transition-all hover:bg-amber-600 hover:text-white hover:shadow-lg hover:shadow-amber-200"
               >
                 <Download className="h-4 w-4" />
                 Download Skill
@@ -160,12 +160,12 @@ export function SkillDetailContent({ profile }: { profile: SkillProfile }) {
                 </p>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <FileText className="h-3.5 w-3.5 text-purple-400" />
+                    <FileText className="h-3.5 w-3.5 text-amber-400" />
                     SKILL.md
                   </div>
                   {profile.readmeMd && (
                     <div className="flex items-center gap-2 text-sm text-gray-600">
-                      <FileText className="h-3.5 w-3.5 text-purple-400" />
+                      <FileText className="h-3.5 w-3.5 text-amber-400" />
                       README.md
                     </div>
                   )}

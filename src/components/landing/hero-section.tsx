@@ -30,7 +30,7 @@ export function HeroSection() {
           Find the right knowledge for{" "}
           <br className="hidden sm:block" />
           your agent to{" "}
-          <span className="text-purple-600">build on Hackathons</span>
+          <span className="text-amber-600">build on Hackathons</span>
         </h1>
 
         {/* Subtitle */}
@@ -43,13 +43,13 @@ export function HeroSection() {
         <div className="mt-8 flex items-center gap-6 sm:mt-10">
           <Button
             asChild
-            className="h-11 rounded-full bg-purple-600 px-8 text-sm font-semibold text-white shadow-none transition-all hover:bg-purple-500 hover:shadow-lg hover:shadow-purple-200 sm:h-12 sm:px-10 sm:text-[0.9rem]"
+            className="h-11 rounded-full bg-amber-600 px-8 text-sm font-semibold text-white shadow-none transition-all hover:bg-amber-500 hover:shadow-lg hover:shadow-amber-200 sm:h-12 sm:px-10 sm:text-[0.9rem]"
           >
             <Link href="/get-started">Get Started</Link>
           </Button>
           <Link
             href="/browse"
-            className="text-[0.85rem] font-medium text-gray-400 transition-colors hover:text-purple-600"
+            className="text-[0.85rem] font-medium text-gray-400 transition-colors hover:text-amber-600"
           >
             Browse Skills
           </Link>
@@ -60,7 +60,7 @@ export function HeroSection() {
           {STEPS.map((step, i) => (
             <div key={step.label} className="flex items-start">
               <div className="flex w-20 flex-col items-center text-center sm:w-28">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-50 text-xs font-bold text-purple-600 sm:h-9 sm:w-9">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-amber-50 text-xs font-bold text-amber-600 sm:h-9 sm:w-9">
                   {i + 1}
                 </div>
                 <p className="mt-2.5 text-[11px] font-semibold text-gray-800 sm:text-xs">
@@ -71,7 +71,7 @@ export function HeroSection() {
                 </p>
               </div>
               {i < STEPS.length - 1 && (
-                <div className="mt-4 flex-shrink-0 w-8 border-t border-dashed border-purple-200 sm:w-12" />
+                <div className="mt-4 flex-shrink-0 w-8 border-t border-dashed border-amber-200 sm:w-12" />
               )}
             </div>
           ))}
@@ -81,7 +81,7 @@ export function HeroSection() {
         <div className="mt-14 flex flex-col items-center gap-4 sm:mt-16">
           <p className="text-[10px] uppercase tracking-widest text-gray-300">Built by</p>
           <div className="flex items-center gap-3">
-          <div className="relative h-10 w-10 overflow-hidden rounded-full ring-2 ring-purple-100">
+          <div className="relative h-10 w-10 overflow-hidden rounded-full ring-2 ring-amber-100">
             <Image
               src="/badge.jpg"
               alt="Piyush Jha"
@@ -91,7 +91,7 @@ export function HeroSection() {
           </div>
           <div className="text-left">
             <p className="text-sm font-semibold text-gray-800">Piyush Jha</p>
-            <p className="text-[11px] text-gray-400">Developer Evangelist, Monad</p>
+            <p className="text-[11px] text-gray-400">Creator, SkillForge</p>
           </div>
           <div className="ml-3 flex gap-1">
             {SOCIALS.map(({ href, label, d }) => (
@@ -100,7 +100,7 @@ export function HeroSection() {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-7 w-7 items-center justify-center rounded-md text-gray-300 transition-colors hover:text-purple-500"
+                className="flex h-7 w-7 items-center justify-center rounded-md text-gray-300 transition-colors hover:text-amber-500"
                 title={label}
               >
                 <svg className="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 24 24">

@@ -2,14 +2,14 @@
   {
     "id": "starter-pack",
     "name": "Starter Pack",
-    "description": "Essential skills to get your agent building on Monad",
+    "description": "Essential skills to get your agent building on any chain",
     "icon": "rocket",
     "skillSlugs": ["solidity-developer", "fullstack-web3-dev", "ui-ux-designer"]
   },
   {
     "id": "prediction-market",
     "name": "Build a Prediction Market",
-    "description": "Everything you need for a prediction market on Monad",
+    "description": "Everything you need to build a prediction market",
     "icon": "chart",
     "skillSlugs": ["solidity-developer", "fullstack-web3-dev", "prediction-market"]
   },

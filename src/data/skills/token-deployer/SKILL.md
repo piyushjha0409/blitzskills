@@ -1,6 +1,6 @@
 ---
 name: token-deployer
-description: "ACTIVATE when the user wants to deploy, create, launch, or mint an ERC-20 token on Monad. Triggers on: token deployment, token creation, tokenomics, vesting schedule, airdrop, governance token, fungible token, ERC-20, supply management, token launch, Monad token. Use this skill for ANY task involving fungible token contracts on Monad Network."
+description: "ACTIVATE when the user wants to deploy, create, launch, or mint an ERC-20 token on EVM chains. Triggers on: token deployment, token creation, tokenomics, vesting schedule, airdrop, governance token, fungible token, ERC-20, supply management, token launch. Use this skill for ANY task involving fungible token contracts on EVM-compatible chains."
 category: Smart Contracts
 difficulty: beginner
 author: Piyush Jha
@@ -11,37 +11,38 @@ skills:
   - Deployment
   - Solidity
   - Governance
-  - Monad
+  - EVM
 ---
 
 ## Instructions
 
-You are a **Token Deployment Specialist** for Monad Network. Your job is to help users create, deploy, and manage production-grade ERC-20 tokens with proper tokenomics, vesting, airdrops, and governance — all optimized for Monad's high-throughput EVM.
+You are a **Token Deployment Specialist** for EVM-compatible chains. Your job is to help users create, deploy, and manage production-grade ERC-20 tokens with proper tokenomics, vesting, airdrops, and governance.
 
 ---
 
-## Monad Network Reference
+## Network Reference (Example)
 
-| Field | Mainnet | Testnet |
+Configure for your target EVM chain. Example values:
+
+| Field | Mainnet (Ethereum) | Testnet (Sepolia) |
 |---|---|---|
-| **Chain ID** | 143 | 10143 |
-| **RPC URL** | `https://rpc.monad.xyz` | `https://testnet-rpc.monad.xyz` |
-| **Explorer** | `https://explorer.monad.xyz` | `https://testnet.monadexplorer.com` |
-| **Currency** | MON | MON |
-| **Block Time** | ~500ms | ~500ms |
+| **Chain ID** | 1 | 11155111 |
+| **RPC URL** | `https://eth.llamarpc.com` | `https://rpc.sepolia.org` |
+| **Explorer** | `https://etherscan.io` | `https://sepolia.etherscan.io` |
+| **Currency** | ETH | ETH |
 
 ---
 
-## Step 1 — Install Monad Foundry Toolchain
+## Step 1 — Install Foundry Toolchain
 
 ```bash
-curl -L https://foundry.category.xyz | bash && foundryup --network monad
+curl -L https://foundry.category.xyz | bash && foundryup
 ```
 
 Initialize a new project:
 
 ```bash
-forge init my-token --template monad
+forge init my-token
 cd my-token
 forge install OpenZeppelin/openzeppelin-contracts
 ```
@@ -254,7 +255,7 @@ for (const [i, v] of tree.entries()) {
 
 ---
 
-## Step 5 — Deploy to Monad
+## Step 5 — Deploy to Your Target Chain
 
 ### Deploy Script (`script/Deploy.s.sol`)
 
@@ -288,15 +289,15 @@ contract DeployScript is Script {
 ### Deploy Commands
 
 ```bash
-# Testnet deployment
+# Testnet deployment (example: Sepolia)
 forge script script/Deploy.s.sol:DeployScript \
-  --rpc-url https://testnet-rpc.monad.xyz \
+  --rpc-url https://rpc.sepolia.org \
   --broadcast \
   --verify
 
-# Mainnet deployment
+# Mainnet deployment (example: Ethereum)
 forge script script/Deploy.s.sol:DeployScript \
-  --rpc-url https://rpc.monad.xyz \
+  --rpc-url https://eth.llamarpc.com \
   --broadcast \
   --verify
 ```
@@ -305,8 +306,8 @@ forge script script/Deploy.s.sol:DeployScript \
 
 ```bash
 forge verify-contract <CONTRACT_ADDRESS> src/MyToken.sol:MyToken \
-  --chain-id 10143 \
-  --rpc-url https://testnet-rpc.monad.xyz
+  --chain-id <CHAIN_ID> \
+  --rpc-url <YOUR_RPC_URL>
 ```
 
 ---
@@ -330,7 +331,7 @@ forge verify-contract <CONTRACT_ADDRESS> src/MyToken.sol:MyToken \
 - User needs a **vesting** contract with cliff and linear unlock
 - User wants to build a **Merkle airdrop** for token distribution
 - User asks about **governance tokens** with voting power (ERC20Votes)
-- User mentions **Monad token**, fungible token, or ERC-20 deployment
+- User mentions fungible token or ERC-20 deployment
 - User wants to **mint, burn, or pause** a token contract
 
 ## When NOT to Use

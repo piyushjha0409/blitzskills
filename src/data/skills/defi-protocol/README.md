@@ -1,6 +1,6 @@
 # DeFi Protocol Builder
 
-Build complete DeFi protocols on Monad — AMMs, lending pools, yield vaults, and liquidity mining programs.
+Build complete DeFi protocols on EVM chains — AMMs, lending pools, yield vaults, and liquidity mining programs.
 
 ## What This Skill Does
 
@@ -17,7 +17,7 @@ Equips your agent with deep DeFi knowledge — from designing AMM curves and len
 
 ## Ideal For
 
-Builders creating DEXs, lending platforms, yield aggregators, or any DeFi infrastructure on Monad.
+Builders creating DEXs, lending platforms, yield aggregators, or any DeFi infrastructure on EVM chains.
 
 ## Installation
 

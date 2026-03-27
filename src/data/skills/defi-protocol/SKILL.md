@@ -1,6 +1,6 @@
 ---
 name: defi-protocol
-description: "ACTIVATE when the user wants to build, deploy, or design a DeFi protocol on Monad. Triggers on: AMM, DEX, swap, liquidity pool, lending, borrowing, collateral, vault, yield farming, yield aggregator, staking, liquidity mining, flash loan, interest rate, DeFi, Monad DeFi. Use this skill for ANY task involving decentralized finance primitives or protocols on Monad Network."
+description: "ACTIVATE when the user wants to build, deploy, or design a DeFi protocol on EVM chains. Triggers on: AMM, DEX, swap, liquidity pool, lending, borrowing, collateral, vault, yield farming, yield aggregator, staking, liquidity mining, flash loan, interest rate, DeFi. Use this skill for ANY task involving decentralized finance primitives or protocols on EVM-compatible chains."
 category: DeFi
 difficulty: advanced
 author: Piyush Jha
@@ -16,19 +16,20 @@ skills:
 
 ## Instructions
 
-You are a **DeFi Protocol Architect** for Monad Network. Your job is to help users design, build, and deploy production-grade DeFi primitives — AMMs, lending pools, auto-compounding vaults, yield strategies, and liquidity mining programs — all optimized for Monad's parallel execution and high throughput.
+You are a **DeFi Protocol Architect** for EVM-compatible chains. Your job is to help users design, build, and deploy production-grade DeFi primitives — AMMs, lending pools, auto-compounding vaults, yield strategies, and liquidity mining programs.
 
 ---
 
-## Monad Network Reference
+## Network Reference (Example)
 
-| Field | Mainnet | Testnet |
+Configure for your target EVM chain. Example values:
+
+| Field | Mainnet (Ethereum) | Testnet (Sepolia) |
 |---|---|---|
-| **Chain ID** | 143 | 10143 |
-| **RPC URL** | `https://rpc.monad.xyz` | `https://testnet-rpc.monad.xyz` |
-| **Explorer** | `https://explorer.monad.xyz` | `https://testnet.monadexplorer.com` |
-| **Currency** | MON | MON |
-| **Block Time** | ~500ms | ~500ms |
+| **Chain ID** | 1 | 11155111 |
+| **RPC URL** | `https://eth.llamarpc.com` | `https://rpc.sepolia.org` |
+| **Explorer** | `https://etherscan.io` | `https://sepolia.etherscan.io` |
+| **Currency** | ETH | ETH |
 
 ---
 
@@ -63,7 +64,7 @@ contract SimpleAMM is ERC20, ReentrancyGuard {
     event LiquidityRemoved(address indexed provider, uint256 amount0, uint256 amount1, uint256 lpTokens);
 
     constructor(address _token0, address _token1)
-        ERC20("Monad AMM LP", "mAMM-LP")
+        ERC20("AMM LP Token", "AMM-LP")
     {
         require(_token0 != _token1, "Identical tokens");
         token0 = IERC20(_token0);
@@ -187,7 +188,7 @@ contract LendingPool is ReentrancyGuard {
     using SafeERC20 for IERC20;
 
     IERC20 public immutable lendingToken;     // e.g. USDC
-    IERC20 public immutable collateralToken;  // e.g. WMON
+    IERC20 public immutable collateralToken;  // e.g. WETH
 
     uint256 public constant LTV_BPS = 7500;               // 75% loan-to-value
     uint256 public constant LIQUIDATION_THRESHOLD = 8500;  // 85% triggers liquidation
@@ -470,22 +471,22 @@ contract StakingRewards is ReentrancyGuard {
 
 ---
 
-## Step 5 — Deploy to Monad
+## Step 5 — Deploy to Your Target Chain
 
 ```bash
 # Install
-curl -L https://foundry.category.xyz | bash && foundryup --network monad
-forge init monad-defi --template monad && cd monad-defi
+curl -L https://foundry.category.xyz | bash && foundryup
+forge init my-defi && cd my-defi
 forge install OpenZeppelin/openzeppelin-contracts
 
-# Deploy to testnet
+# Deploy to testnet (example: Sepolia)
 forge script script/Deploy.s.sol:DeployDeFi \
-  --rpc-url https://testnet-rpc.monad.xyz \
+  --rpc-url https://rpc.sepolia.org \
   --broadcast --verify
 
-# Deploy to mainnet
+# Deploy to mainnet (example: Ethereum)
 forge script script/Deploy.s.sol:DeployDeFi \
-  --rpc-url https://rpc.monad.xyz \
+  --rpc-url https://eth.llamarpc.com \
   --broadcast --verify
 ```
 
@@ -536,7 +537,7 @@ contract DeployDeFi is Script {
 - User wants **staking rewards** or **liquidity mining** programs
 - User asks about **interest rate models**, **health factors**, or **LTV**
 - User mentions **flash loans**, **oracle integration**, or **TWAP**
-- User wants to build **DeFi on Monad**
+- User wants to build **DeFi on EVM chains**
 
 ## When NOT to Use
 
